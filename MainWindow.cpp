@@ -34,14 +34,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);
     connect(parser, &LogParser::multiLineParsed, model, &LogModel::mergeLastRow);
     connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);
-  //  QElapsedTimer timer;
-  //  timer.start();
-//    for (long i = 0; i < 10000; i++) {
-//      LogEntry entry = parser.parseLine("12:38:28 24/10/2017 Deb: [XML_:___] XmlDataLogger::log name='clientModuleInfo'");
-//      model->addRow(entry);
-//    }
-  //  qDebug() << timer.elapsed()/1000.0;
 }
+
 void MainWindow::centerAndResize() {
     // get the dimension available on this screen
     QDesktopWidget* desktopWidget = QApplication::desktop();

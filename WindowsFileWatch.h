@@ -5,11 +5,12 @@
 #include <QFileSystemWatcher>
 #include <QObject>
 #include <QTextStream>
-//#include <windows.h>
-//#include <tchar.h>
+#include <windows.h>
+#include <tchar.h>
 #include <stdio.h>
-//#include <strsafe.h>
-//#include <io.h>
+#include <strsafe.h>
+#include <io.h>
+
 class WindowsFileWatch : public QObject
 {
     Q_OBJECT
@@ -23,11 +24,11 @@ signals:
 
 private:
     QString mFilePath;
-//    LPCWSTR mWinApiFilePath;
+    LPCWSTR mWinApiFilePath;
     QFileSystemWatcher mFileSystemWatcher;
     QFile mFile;
     QTextStream mTextStream;
-//    HANDLE mHandle;
+    HANDLE mHandle;
 
     void openFile();
     void setupFileWatcher();

@@ -20,7 +20,9 @@ SOURCES += main.cpp \
     TailFileWatch.cpp \
     MainWindow.cpp \
     LogModel.cpp \
-    ContentItemDelegate.cpp
+    ContentItemDelegate.cpp \
+    SettingsProvider.cpp \
+    LoggerObjectSettings.cpp
 
 HEADERS += \
     LogParser.h \
@@ -29,7 +31,9 @@ HEADERS += \
     TailFileWatch.h \
     MainWindow.h \
     LogModel.h \
-    ContentItemDelegate.h
+    ContentItemDelegate.h \
+    SettingsProvider.h \
+    LoggerObjectSettings.h
 
 win32 {
   HEADERS += WindowsFileWatch.h

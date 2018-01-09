@@ -2,9 +2,7 @@
 #define OFFSETLOGPARSER_H
 #include "LogParser.h"
 
-class OffsetLogParser
-  : public LogParser
-{
+class OffsetLogParser : public LogParser {
 public:
   OffsetLogParser();
 

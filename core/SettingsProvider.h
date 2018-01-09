@@ -6,14 +6,14 @@
 #include <QList>
 #include <QSettings>
 
-class SettingsProvider
-{
+class SettingsProvider {
 public:
-    SettingsProvider(QSettings *settings);
+  SettingsProvider(QSettings *settings);
 
-    QList<LoggerObjectSettings> getAllLoggersSettings();
+  QList<LoggerObjectSettings> getAllLoggersSettings();
+
 private:
-    QSettings *mSettings;
+  QSettings *mSettings;
 };
 
 #endif // SETTINGSPROVIDER_H

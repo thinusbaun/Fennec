@@ -3,14 +3,12 @@
 
 #include <QtWidgets/QMainWindow>
 
-class MainWindow
-  : public QMainWindow
-{
+class MainWindow : public QMainWindow {
   Q_OBJECT
 public:
-  explicit MainWindow(QWidget* parent = nullptr);
+  explicit MainWindow(QWidget *parent = nullptr);
 
-    void centerAndResize();
+  void centerAndResize();
 };
 
 #endif // MAINWINDOW_H

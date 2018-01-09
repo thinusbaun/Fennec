@@ -12,21 +12,19 @@
 //#include <io.h>
 #include <QProcess>
 
-class TailFileWatch
-  : public QObject
-{
+class TailFileWatch : public QObject {
   Q_OBJECT
 
 public:
-  TailFileWatch(const QString& filePath, QObject* parent = nullptr);
+  TailFileWatch(const QString &filePath, QObject *parent = nullptr);
   ~TailFileWatch();
 
 signals:
-  void newLine(const QString& line);
+  void newLine(const QString &line);
 
 private:
   QString mFilePath;
-  QProcess* mTailProcess;
+  QProcess *mTailProcess;
 
   void openFile();
   void setupFileWatcher();

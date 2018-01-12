@@ -27,7 +27,9 @@ TEMPLATE = app
 
 
 SOURCES += \
-        LogEntryTest.cpp 
+        LogEntryTest.cpp \  
+        LogModelTest.cpp \
+        main.cpp
 
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
@@ -40,3 +42,7 @@ PRE_TARGETDEPS += ../core/libcore.so.1
 
 
 QMAKE_LFLAGS += -Wl,-rpath,../core/
+
+HEADERS += \
+        LogEntryTest.h \
+        LogModelTest.h

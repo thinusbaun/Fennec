@@ -4,11 +4,11 @@
 #include <LogEntry.h>
 #include <QAbstractTableModel>
 
-constexpr static int MultiLineRole = Qt::UserRole + 1;
-
 class LogModel : public QAbstractTableModel {
   Q_OBJECT
 public:
+  constexpr static int MultiLineRole = Qt::UserRole + 1;
+
   LogModel(const QStringList &headers);
   int columnCount(const QModelIndex &parent) const;
   QVariant headerData(int section, Qt::Orientation orientation, int role) const;

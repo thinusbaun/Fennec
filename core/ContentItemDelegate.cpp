@@ -11,7 +11,7 @@ void ContentItemDelegate::paint(QPainter *painter,
                                 const QStyleOptionViewItem &option,
                                 const QModelIndex &index) const {
   QItemDelegate::paint(painter, option, index);
-  bool isMultiline = index.data(MultiLineRole).toBool();
+  bool isMultiline = index.data(LogModel::MultiLineRole).toBool();
   if (isMultiline) {
     //        painter->fillRect(option.rect, Qt::red);
     QRect rect = option.rect;

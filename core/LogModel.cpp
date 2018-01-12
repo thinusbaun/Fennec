@@ -12,7 +12,9 @@ QVariant LogModel::headerData(int section, Qt::Orientation orientation,
                               int role) const {
   if (role == Qt::DisplayRole) {
     if (orientation == Qt::Horizontal) {
-      return mHeaders[section];
+      if (section < mHeaders.size()) {
+        return mHeaders[section];
+      }
     } else {
       return QVariant(section + 1);
     }
@@ -26,6 +28,10 @@ int LogModel::rowCount(const QModelIndex &parent) const {
 }
 
 QVariant LogModel::data(const QModelIndex &index, int role) const {
+  if (!index.isValid()) {
+    return QVariant();
+  }
+
   if (role == MultiLineRole) {
     QString columnHeader = mHeaders[index.column()];
     return mEntries[index.row()].isPartMultiline(columnHeader);

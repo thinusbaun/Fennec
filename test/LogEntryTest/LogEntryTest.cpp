@@ -1,5 +1,13 @@
+#include <LogEntry.h>
+#include <QtTest/QtTest>
 
-#include "LogEntryTest.h"
+class LogEntryTest : public QObject {
+  Q_OBJECT
+private slots:
+  void setPart();
+  void mergeString();
+  void mergeNonString();
+};
 
 void LogEntryTest::setPart() {
   LogEntry entry;
@@ -29,3 +37,8 @@ void LogEntryTest::mergeNonString() {
   QVERIFY(first.getPartsMap()["PART_NAME"].type() != QVariant::String);
   QCOMPARE(first.getPartsMap()["PART_NAME"], 123);
 }
+
+
+QTEST_APPLESS_MAIN(LogEntryTest)
+
+#include "LogEntryTest.moc"

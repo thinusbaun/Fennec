@@ -1,7 +1,19 @@
-#include "LogModelTest.h"
-#include "LogEntry.h"
-#include "LogModel.h"
+#include <LogEntry.h>
+#include <QtTest/QtTest>
+#include <LogModel.h>
 #include <QSignalSpy>
+
+class LogModelTest : public QObject {
+  Q_OBJECT
+private slots:
+  void setColumnsCount();
+  void addRow();
+  void mergeRow();
+  void headerData();
+  void dataDisplayAndToolTipRole();
+  void dataMultilineRole();
+};
+
 
 void LogModelTest::setColumnsCount() {
   QStringList columns{"A", "B", "C", "D"};
@@ -85,3 +97,7 @@ void LogModelTest::dataMultilineRole() {
   QCOMPARE(model.data(model.index(0, 0), LogModel::MultiLineRole), true);
   QVERIFY(!model.data(model.index(1, 1), LogModel::MultiLineRole).isValid());
 }
+
+QTEST_APPLESS_MAIN(LogModelTest)
+
+#include "LogModelTest.moc"

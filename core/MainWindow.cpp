@@ -11,6 +11,7 @@
 #include <TailFileWatch.h>
 
 #include "MainWindow.h"
+#include "RegexLogParser.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   QWidget *mainWidget = new QWidget(this);
@@ -30,8 +31,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   //    TailFileWatch* watch = new
   //    TailFileWatch("C:/untitled12/example.log");
   TailFileWatch *watch =
-      new TailFileWatch("/mnt/winda/untitled12/example.log");
-  OffsetLogParser *parser = new OffsetLogParser();
+      new TailFileWatch("/mnt/winda/untitled12/core/example.log");
+  RegexLogParser *parser = new RegexLogParser(
+      R"(^(?<TIMESTAMP>\d{2}:\d{2}:\d{2} \d{2}\/\d{2}\/\d{4}) (?<LEVEL>\w*): \[(?<SUBSYSTEM>.*:.*)\] (?<CONTENT>.*)$)");
+  //  OffsetLogParser *parser = new OffsetLogParser();
   connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);
   connect(parser, &LogParser::multiLineParsed, model, &LogModel::mergeLastRow);
   connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);

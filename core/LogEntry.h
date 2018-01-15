@@ -19,4 +19,5 @@ private:
   QMap<QString, bool> mMultilinesMap;
 };
 
+Q_DECLARE_METATYPE(LogEntry);
 #endif // LOGENTRY_H

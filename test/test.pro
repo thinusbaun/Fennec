@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 SUBDIRS += \
     LogEntryTest \
-    LogModelTest
+    LogModelTest \
+    RegexLogParserTest

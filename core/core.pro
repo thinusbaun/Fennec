@@ -22,7 +22,8 @@ SOURCES += LogParser.cpp \
     LogModel.cpp \
     ContentItemDelegate.cpp \
     SettingsProvider.cpp \
-    LoggerObjectSettings.cpp
+    LoggerObjectSettings.cpp \
+    RegexLogParser.cpp
 
 HEADERS += \
     LogParser.h \
@@ -33,7 +34,8 @@ HEADERS += \
     LogModel.h \
     ContentItemDelegate.h \
     SettingsProvider.h \
-    LoggerObjectSettings.h
+    LoggerObjectSettings.h \
+    RegexLogParser.h
 
 win32 {
   HEADERS += WindowsFileWatch.h

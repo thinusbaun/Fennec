@@ -9,6 +9,9 @@ public:
   explicit MainWindow(QWidget *parent = nullptr);
 
   void centerAndResize();
+
+private:
+  static QMap<QString, QVariant> mSettings;
 };
 
 #endif // MAINWINDOW_H

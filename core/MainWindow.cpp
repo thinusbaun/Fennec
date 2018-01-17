@@ -1,3 +1,4 @@
+#include "TailFileWatchFactory.h"
 #include <ContentItemDelegate.h>
 #include <LogEntry.h>
 #include <LogModel.h>
@@ -10,8 +11,18 @@
 #include <QWidget>
 #include <TailFileWatch.h>
 
+#include "LogModelFactory.h"
 #include "MainWindow.h"
 #include "RegexLogParser.h"
+#include "RegexLogParserFactory.h"
+
+QMap<QString, QVariant> MainWindow::mSettings{
+    {"HEADERS", QStringList({"TIMESTAMP", "LEVEL", "SUBSYSTEM", "CONTENT"})},
+    {"TAIL_PATH", "/usr/bin/tail"},
+    {"TAIL_ADDITIONAL_ARGS", QStringList({"-n", "+1"})},
+    {"TAIL_FILE_PATH", "/mnt/winda/untitled12/core/example.log"},
+    {"PARSER_REGEX",
+     R"(^(?<TIMESTAMP>\d{2}:\d{2}:\d{2} \d{2}\/\d{2}\/\d{4}) (?<LEVEL>\w*): \[(?<SUBSYSTEM>.*:.*)\] (?<CONTENT>.*)$)"}};
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   QWidget *mainWidget = new QWidget(this);
@@ -21,20 +32,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
   QTableView *tableView = new QTableView(this);
   tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-  LogModel *model =
-      new LogModel({"TIMESTAMP", "LEVEL", "SUBSYSTEM", "CONTENT"});
+
+  LogModelFactory factory(mSettings, this);
+  LogModel *model = factory.create();
   tableView->setModel(model);
   tableView->horizontalHeader()->setStretchLastSection(true);
   tableView->setItemDelegateForColumn(3, new ContentItemDelegate());
   layout->addWidget(tableView);
 
-  //    TailFileWatch* watch = new
-  //    TailFileWatch("C:/untitled12/example.log");
-  TailFileWatch *watch =
-      new TailFileWatch("/mnt/winda/untitled12/core/example.log");
-  RegexLogParser *parser = new RegexLogParser(
-      R"(^(?<TIMESTAMP>\d{2}:\d{2}:\d{2} \d{2}\/\d{2}\/\d{4}) (?<LEVEL>\w*): \[(?<SUBSYSTEM>.*:.*)\] (?<CONTENT>.*)$)");
-  //  OffsetLogParser *parser = new OffsetLogParser();
+  TailFileWatchFactory watchFactory(mSettings, this);
+  TailFileWatch *watch = watchFactory.create();
+
+  RegexLogParserFactory parserFactory(mSettings, this);
+  RegexLogParser *parser = parserFactory.create();
+
   connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);
   connect(parser, &LogParser::multiLineParsed, model, &LogModel::mergeLastRow);
   connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);

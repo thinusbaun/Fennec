@@ -6,5 +6,7 @@ TailFileWatchFactory::TailFileWatchFactory(
     : QObject(parent), mSettings(settings) {}
 
 TailFileWatch *TailFileWatchFactory::create() {
-  return new TailFileWatch(mSettings["TAIL_FILE_PATH"].toString());
+  return new TailFileWatch(mSettings["TAIL_PATH"].toString(),
+                           mSettings["TAIL_ADDITIONAL_ARGS"].toStringList(),
+                           mSettings["TAIL_FILE_PATH"].toString());
 }

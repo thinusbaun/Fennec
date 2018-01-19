@@ -30,15 +30,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   mainWidget->setLayout(layout);
   setCentralWidget(mainWidget);
 
-  QTableView *tableView = new QTableView(this);
-  tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+  mTableView = new QTableView(this);
+  mTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
   LogModelFactory factory(mSettings, this);
   LogModel *model = factory.create();
-  tableView->setModel(model);
-  tableView->horizontalHeader()->setStretchLastSection(true);
-  tableView->setItemDelegateForColumn(3, new ContentItemDelegate());
-  layout->addWidget(tableView);
+  mTableView->setModel(model);
+  mTableView->horizontalHeader()->setStretchLastSection(true);
+  mTableView->setItemDelegateForColumn(3, new ContentItemDelegate());
+  layout->addWidget(mTableView);
 
   TailFileWatchFactory watchFactory(mSettings, this);
   TailFileWatch *watch = watchFactory.create();
@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);
   connect(parser, &LogParser::multiLineParsed, model, &LogModel::mergeLastRow);
   connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);
+  watch->openFile();
 }
 
 void MainWindow::centerAndResize() {

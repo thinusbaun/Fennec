@@ -16,17 +16,20 @@ class TailFileWatch : public QObject {
   Q_OBJECT
 
 public:
-  TailFileWatch(const QString &filePath, QObject *parent = nullptr);
+  TailFileWatch(const QString &tailPath, const QStringList &tailArgs,
+                const QString &filePath, QObject *parent = nullptr);
   ~TailFileWatch();
+  void openFile();
 
 signals:
   void newLine(const QString &line);
 
 private:
+  QString mTailPath;
+  QStringList mTailArgs;
   QString mFilePath;
   QProcess *mTailProcess;
 
-  void openFile();
   void setupFileWatcher();
 
   void closeHandle();

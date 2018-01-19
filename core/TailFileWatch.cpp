@@ -3,28 +3,31 @@
 #include <QFileInfo>
 #include <assert.h>
 
-TailFileWatch::TailFileWatch(const QString &filePath, QObject *parent)
-    : QObject(parent), mFilePath(filePath) {
+TailFileWatch::TailFileWatch(const QString &tailPath,
+                             const QStringList &tailArgs,
+                             const QString &filePath, QObject *parent)
+    : QObject(parent), mTailPath(tailPath), mTailArgs(tailArgs),
+      mFilePath(filePath) {
   mTailProcess = new QProcess(this);
   connect(mTailProcess, &QProcess::readyReadStandardOutput, this,
           &TailFileWatch::fileChanged);
-  //  QString pathToTail = "C:/cygwin64/bin/tail.exe";
-  QString pathToTail = "/usr/bin/tail";
-  QStringList arguments;
-  arguments << "-n"
-            << "+1"
-            << "-F" << mFilePath;
-  mTailProcess->start(pathToTail, arguments);
+}
+
+TailFileWatch::~TailFileWatch() { closeHandle(); }
+
+void TailFileWatch::openFile() {
+  QStringList arguments = mTailArgs;
+  arguments << "-F" << mFilePath;
+  mTailProcess->start(mTailPath, arguments);
   qDebug() << "Tail process started";
 }
 
-TailFileWatch::~TailFileWatch() {}
-
-void TailFileWatch::openFile() {}
-
 void TailFileWatch::setupFileWatcher() {}
 
-void TailFileWatch::closeHandle() {}
+void TailFileWatch::closeHandle() {
+  mTailProcess->close();
+  qDebug() << "Tail process stopped";
+}
 
 void TailFileWatch::fileChanged() {
   char buff[1024];

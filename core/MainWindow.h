@@ -3,6 +3,8 @@
 
 #include <QtWidgets/QMainWindow>
 
+class QTableView;
+
 class MainWindow : public QMainWindow {
   Q_OBJECT
 public:
@@ -10,8 +12,11 @@ public:
 
   void centerAndResize();
 
+  QTableView *asd();
+
 private:
   static QMap<QString, QVariant> mSettings;
+  QTableView *mTableView;
 };
 
 #endif // MAINWINDOW_H

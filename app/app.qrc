@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/fennec">
+        <file>fennec.svg</file>
+    </qresource>
+</RCC>

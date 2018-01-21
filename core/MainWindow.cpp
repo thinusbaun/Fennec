@@ -67,3 +67,8 @@ void MainWindow::centerAndResize() {
   setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, newSize,
                                   desktopWidget->availableGeometry()));
 }
+
+void MainWindow::setBasicWindowName(const QString &name) {
+  mBasicName = name;
+  setWindowTitle(name);
+}

@@ -12,11 +12,12 @@ public:
 
   void centerAndResize();
 
-  QTableView *asd();
+  void setBasicWindowName(const QString &name);
 
 private:
   static QMap<QString, QVariant> mSettings;
   QTableView *mTableView;
+  QString mBasicName;
 };
 
 #endif // MAINWINDOW_H

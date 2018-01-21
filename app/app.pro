@@ -22,3 +22,6 @@ LIBS += -L../core -lcore
 PRE_TARGETDEPS += ../core/libcore.so.1
 
 QMAKE_LFLAGS += -Wl,-rpath,../core/
+
+RESOURCES += \
+    app.qrc

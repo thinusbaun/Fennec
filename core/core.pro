@@ -26,7 +26,8 @@ SOURCES += LogParser.cpp \
     RegexLogParser.cpp \
     LogModelFactory.cpp \
     TailFileWatchFactory.cpp \
-    RegexLogParserFactory.cpp
+    RegexLogParserFactory.cpp \
+    LogViewTabManager.cpp
 
 HEADERS += \
     LogParser.h \
@@ -41,7 +42,8 @@ HEADERS += \
     RegexLogParser.h \
     LogModelFactory.h \
     TailFileWatchFactory.h \
-    RegexLogParserFactory.h
+    RegexLogParserFactory.h \
+    LogViewTabManager.h
 
 win32 {
   HEADERS += WindowsFileWatch.h

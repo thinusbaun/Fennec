@@ -1,20 +1,14 @@
-#include "TailFileWatchFactory.h"
-#include <ContentItemDelegate.h>
-#include <LogEntry.h>
-#include <LogModel.h>
-#include <OffsetLogParser.h>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QTabWidget>
 #include <QTableView>
 #include <QWidget>
-#include <TailFileWatch.h>
 
-#include "LogModelFactory.h"
+#include "LogViewTabManager.h"
+
 #include "MainWindow.h"
-#include "RegexLogParser.h"
-#include "RegexLogParserFactory.h"
 
 QMap<QString, QVariant> MainWindow::mSettings{
     {"HEADERS", QStringList({"TIMESTAMP", "LEVEL", "SUBSYSTEM", "CONTENT"})},
@@ -30,26 +24,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   mainWidget->setLayout(layout);
   setCentralWidget(mainWidget);
 
-  mTableView = new QTableView(this);
-  mTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+  QTabWidget *tabWidget = new QTabWidget();
+  layout->addWidget(tabWidget);
 
-  LogModelFactory factory(mSettings, this);
-  LogModel *model = factory.create();
-  mTableView->setModel(model);
-  mTableView->horizontalHeader()->setStretchLastSection(true);
-  mTableView->setItemDelegateForColumn(3, new ContentItemDelegate());
-  layout->addWidget(mTableView);
-
-  TailFileWatchFactory watchFactory(mSettings, this);
-  TailFileWatch *watch = watchFactory.create();
-
-  RegexLogParserFactory parserFactory(mSettings, this);
-  RegexLogParser *parser = parserFactory.create();
-
-  connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);
-  connect(parser, &LogParser::multiLineParsed, model, &LogModel::mergeLastRow);
-  connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);
-  watch->openFile();
+  LogViewTabManager manager(tabWidget, mSettings);
+  manager.createViews();
 }
 
 void MainWindow::centerAndResize() {
@@ -58,10 +37,10 @@ void MainWindow::centerAndResize() {
   QSize availableSize = desktopWidget->availableGeometry().size();
   int width = availableSize.width();
   int height = availableSize.height();
-  qDebug() << "Available dimensions " << width << "x" << height;
+  //  qDebug() << "Available dimensions " << width << "x" << height;
   width *= 0.9;  // 90% of the screen size
   height *= 0.9; // 90% of the screen size
-  qDebug() << "Computed dimensions " << width << "x" << height;
+  //  qDebug() << "Computed dimensions " << width << "x" << height;
   QSize newSize(width, height);
 
   setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, newSize,

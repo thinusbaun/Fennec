@@ -1,6 +1,8 @@
 #ifndef WINDOWSFILEWATCH_H
 #define WINDOWSFILEWATCH_H
 
+#ifdef WIN32
+
 #include <QFile>
 #include <QFileSystemWatcher>
 #include <QObject>
@@ -38,4 +40,5 @@ private slots:
   void directoryChanged();
 };
 
+#endif
 #endif // WINDOWSFILEWATCH_H

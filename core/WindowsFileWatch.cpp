@@ -1,3 +1,4 @@
+#ifdef WIN32
 #include "WindowsFileWatch.h"
 #include <QDebug>
 #include <QFileInfo>
@@ -85,3 +86,4 @@ void WindowsFileWatch::directoryChanged() {
   //    }
   //  }
 }
+#endif

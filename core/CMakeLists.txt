@@ -13,5 +13,11 @@ target_include_directories(core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(core Qt5::Widgets)
 
+add_custom_command(TARGET core POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:core>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Gui> $<TARGET_FILE_DIR:core>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Widgets> $<TARGET_FILE_DIR:core>
+    )
+
 install(TARGETS core DESTINATION lib)
 install(FILES ${include_files} DESTINATION include)

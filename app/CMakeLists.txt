@@ -14,4 +14,8 @@ add_executable(FennecApp
 
 target_link_libraries(FennecApp core)
 
+add_custom_command(TARGET FennecApp POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:FennecApp>
+    )
+
 install (TARGETS FennecApp DESTINATION bin)

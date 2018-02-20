@@ -7,4 +7,6 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_subdirectory(app)
 add_subdirectory(core)
+enable_testing()
+add_subdirectory(test/LogEntryTest)
 

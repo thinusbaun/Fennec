@@ -3,10 +3,11 @@
 
 #include <QMap>
 #include <QObject>
+#include <core_export.h>
 
 class LogModel;
 
-class LogModelFactory : public QObject {
+class CORE_EXPORT LogModelFactory : public QObject {
   Q_OBJECT
 public:
   explicit LogModelFactory(const QMap<QString, QVariant> &settings,

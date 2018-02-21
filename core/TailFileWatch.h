@@ -11,8 +11,9 @@
 //#include <strsafe.h>
 //#include <io.h>
 #include <QProcess>
+#include <core_export.h>
 
-class TailFileWatch : public QObject {
+class CORE_EXPORT TailFileWatch : public QObject {
   Q_OBJECT
 
 public:

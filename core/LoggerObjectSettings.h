@@ -3,8 +3,9 @@
 
 #include <QString>
 #include <QStringList>
+#include <core_export.h>
 
-class LoggerObjectSettings {
+class CORE_EXPORT LoggerObjectSettings {
 public:
   LoggerObjectSettings();
 

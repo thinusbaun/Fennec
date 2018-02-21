@@ -12,8 +12,9 @@
 #include <strsafe.h>
 #include <tchar.h>
 #include <windows.h>
+#include <core_export.h>
 
-class WindowsFileWatch : public QObject {
+class CORE_EXPORT WindowsFileWatch : public QObject {
   Q_OBJECT
 
 public:

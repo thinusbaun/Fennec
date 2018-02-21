@@ -5,10 +5,11 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
+#include <core_export.h>
 
 class TailFileWatch;
 
-class TailFileWatchFactory : public QObject {
+class CORE_EXPORT TailFileWatchFactory : public QObject {
   Q_OBJECT
 public:
   TailFileWatchFactory(const QMap<QString, QVariant> &settings,

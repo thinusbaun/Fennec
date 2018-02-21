@@ -9,4 +9,6 @@ add_subdirectory(app)
 add_subdirectory(core)
 enable_testing()
 add_subdirectory(test/LogEntryTest)
+add_subdirectory(test/LogModelTest)
+add_subdirectory(test/RegexLogParserTest)
 

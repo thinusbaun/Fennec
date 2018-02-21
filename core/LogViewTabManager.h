@@ -6,8 +6,9 @@
 #include <QString>
 #include <QTabWidget>
 #include <QVariant>
+#include <core_export.h>
 
-class LogViewTabManager : public QObject {
+class CORE_EXPORT LogViewTabManager : public QObject {
   Q_OBJECT
 public:
   explicit LogViewTabManager(QTabWidget *widgetToManage,

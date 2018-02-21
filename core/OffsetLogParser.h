@@ -1,8 +1,8 @@
 #ifndef OFFSETLOGPARSER_H
 #define OFFSETLOGPARSER_H
 #include "LogParser.h"
-
-class OffsetLogParser : public LogParser {
+#include <core_export.h>
+class CORE_EXPORT OffsetLogParser : public LogParser {
 public:
   OffsetLogParser();
 

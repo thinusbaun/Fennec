@@ -3,8 +3,9 @@
 
 #include <LogEntry.h>
 #include <QObject>
+#include <core_export.h>
 
-class LogParser : public QObject {
+class CORE_EXPORT LogParser : public QObject {
   Q_OBJECT
 public:
   explicit LogParser(QObject *parent = nullptr);

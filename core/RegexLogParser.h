@@ -4,8 +4,9 @@
 #include "LogParser.h"
 #include <QObject>
 #include <QRegularExpression>
+#include <core_export.h>
 
-class RegexLogParser : public LogParser {
+class CORE_EXPORT RegexLogParser : public LogParser {
   Q_OBJECT
 public:
   explicit RegexLogParser(const QString &regex, QObject *parent = nullptr);

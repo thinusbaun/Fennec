@@ -5,8 +5,9 @@
 
 #include <QList>
 #include <QSettings>
+#include <core_export.h>
 
-class SettingsProvider {
+class CORE_EXPORT SettingsProvider {
 public:
   SettingsProvider(QSettings *settings);
 

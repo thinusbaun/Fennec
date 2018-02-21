@@ -2,10 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
+#include <core_export.h>
 
 class QTableView;
 
-class MainWindow : public QMainWindow {
+class CORE_EXPORT MainWindow : public QMainWindow {
   Q_OBJECT
 public:
   explicit MainWindow(QWidget *parent = nullptr);

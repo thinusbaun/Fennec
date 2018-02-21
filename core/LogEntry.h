@@ -3,8 +3,9 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QString>
+#include <core_export.h>
 
-class LogEntry {
+class CORE_EXPORT LogEntry {
 public:
   LogEntry();
 

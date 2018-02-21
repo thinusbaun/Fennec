@@ -3,8 +3,9 @@
 
 #include <LogEntry.h>
 #include <QAbstractTableModel>
+#include <core_export.h>
 
-class LogModel : public QAbstractTableModel {
+class CORE_EXPORT LogModel : public QAbstractTableModel {
   Q_OBJECT
 public:
   constexpr static int MultiLineRole = Qt::UserRole + 1;

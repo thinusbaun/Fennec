@@ -5,10 +5,11 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
+#include <core_export.h>
 
 class RegexLogParser;
 
-class RegexLogParserFactory : public QObject {
+class CORE_EXPORT RegexLogParserFactory : public QObject {
   Q_OBJECT
 public:
   explicit RegexLogParserFactory(const QMap<QString, QVariant> &settings,

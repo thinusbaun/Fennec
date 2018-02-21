@@ -3,8 +3,9 @@
 
 #include <QItemDelegate>
 #include <QObject>
+#include <core_export.h>
 
-class ContentItemDelegate : public QItemDelegate {
+class CORE_EXPORT ContentItemDelegate : public QItemDelegate {
 public:
   ContentItemDelegate();
   void paint(QPainter *painter, const QStyleOptionViewItem &option,

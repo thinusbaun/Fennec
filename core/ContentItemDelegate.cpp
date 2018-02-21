@@ -7,9 +7,9 @@
 
 ContentItemDelegate::ContentItemDelegate() {}
 
-void ContentItemDelegate::paint(QPainter *painter,
-                                const QStyleOptionViewItem &option,
-                                const QModelIndex &index) const {
+void ContentItemDelegate::paint(QPainter* painter,
+                                const QStyleOptionViewItem& option,
+                                const QModelIndex& index) const {
   QItemDelegate::paint(painter, option, index);
   bool isMultiline = index.data(LogModel::MultiLineRole).toBool();
   if (isMultiline) {
@@ -20,10 +20,10 @@ void ContentItemDelegate::paint(QPainter *painter,
   }
 }
 
-void ContentItemDelegate::drawDisplay(QPainter *painter,
-                                      const QStyleOptionViewItem &option,
-                                      const QRect &rect,
-                                      const QString &text) const {
+void ContentItemDelegate::drawDisplay(QPainter* painter,
+                                      const QStyleOptionViewItem& option,
+                                      const QRect& rect,
+                                      const QString& text) const {
   QStringList textParts =
       text.split(QChar::LineSeparator, QString::SkipEmptyParts);
   if (textParts.size() > 1) {

@@ -18,13 +18,13 @@ QMap<QString, QVariant> MainWindow::mSettings{
     {"PARSER_REGEX",
      R"(^(?<TIMESTAMP>\d{2}:\d{2}:\d{2} \d{2}\/\d{2}\/\d{4}) (?<LEVEL>\w*): \[(?<SUBSYSTEM>.*:.*)\] (?<CONTENT>.*)$)"}};
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-  QWidget *mainWidget = new QWidget(this);
-  QHBoxLayout *layout = new QHBoxLayout();
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
+  QWidget* mainWidget = new QWidget(this);
+  QHBoxLayout* layout = new QHBoxLayout();
   mainWidget->setLayout(layout);
   setCentralWidget(mainWidget);
 
-  QTabWidget *tabWidget = new QTabWidget();
+  QTabWidget* tabWidget = new QTabWidget();
   layout->addWidget(tabWidget);
 
   LogViewTabManager manager(tabWidget, mSettings);
@@ -33,13 +33,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 void MainWindow::centerAndResize() {
   // get the dimension available on this screen
-  QDesktopWidget *desktopWidget = QApplication::desktop();
+  QDesktopWidget* desktopWidget = QApplication::desktop();
   QSize availableSize = desktopWidget->availableGeometry().size();
   int width = availableSize.width();
   int height = availableSize.height();
   //  qDebug() << "Available dimensions " << width << "x" << height;
-  width *= 0.9;  // 90% of the screen size
-  height *= 0.9; // 90% of the screen size
+  width *= 0.9;   // 90% of the screen size
+  height *= 0.9;  // 90% of the screen size
   //  qDebug() << "Computed dimensions " << width << "x" << height;
   QSize newSize(width, height);
 
@@ -47,7 +47,7 @@ void MainWindow::centerAndResize() {
                                   desktopWidget->availableGeometry()));
 }
 
-void MainWindow::setBasicWindowName(const QString &name) {
+void MainWindow::setBasicWindowName(const QString& name) {
   mBasicName = name;
   setWindowTitle(name);
 }

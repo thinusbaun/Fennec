@@ -1,11 +1,11 @@
 #include "SettingsProvider.h"
 
-SettingsProvider::SettingsProvider(QSettings *settings) : mSettings(settings) {}
+SettingsProvider::SettingsProvider(QSettings* settings) : mSettings(settings) {}
 
 QList<LoggerObjectSettings> SettingsProvider::getAllLoggersSettings() {
   QList<LoggerObjectSettings> result;
   mSettings->beginGroup("LOGGERS");
-  for (auto &x : mSettings->childGroups()) {
+  for (auto& x : mSettings->childGroups()) {
     mSettings->beginGroup(x);
     LoggerObjectSettings loggerSettings;
     loggerSettings.setName(mSettings->value("name").toString());

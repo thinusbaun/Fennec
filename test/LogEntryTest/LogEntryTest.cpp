@@ -3,7 +3,7 @@
 
 class LogEntryTest : public QObject {
   Q_OBJECT
-private slots:
+ private slots:
   void setPart();
   void mergeString();
   void mergeNonString();
@@ -37,7 +37,6 @@ void LogEntryTest::mergeNonString() {
   QVERIFY(first.getPartsMap()["PART_NAME"].type() != QVariant::String);
   QCOMPARE(first.getPartsMap()["PART_NAME"], 123);
 }
-
 
 QTEST_APPLESS_MAIN(LogEntryTest)
 

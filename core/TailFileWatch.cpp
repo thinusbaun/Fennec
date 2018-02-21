@@ -1,12 +1,14 @@
 #include "TailFileWatch.h"
+#include <assert.h>
 #include <QDebug>
 #include <QFileInfo>
-#include <assert.h>
 
-TailFileWatch::TailFileWatch(const QString &tailPath,
-                             const QStringList &tailArgs,
-                             const QString &filePath, QObject *parent)
-    : QObject(parent), mTailPath(tailPath), mTailArgs(tailArgs),
+TailFileWatch::TailFileWatch(const QString& tailPath,
+                             const QStringList& tailArgs,
+                             const QString& filePath, QObject* parent)
+    : QObject(parent),
+      mTailPath(tailPath),
+      mTailArgs(tailArgs),
       mFilePath(filePath) {
   mTailProcess = new QProcess(this);
   connect(mTailProcess, &QProcess::readyReadStandardOutput, this,

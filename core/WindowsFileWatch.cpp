@@ -5,7 +5,7 @@
 //#include <Shlwapi.h>
 #include <assert.h>
 
-WindowsFileWatch::WindowsFileWatch(const QString &filePath, QObject *parent)
+WindowsFileWatch::WindowsFileWatch(const QString& filePath, QObject* parent)
     : QObject(parent), mFilePath(filePath) {
   bool connectOk =
       connect(&mFileSystemWatcher, &QFileSystemWatcher::fileChanged, this,

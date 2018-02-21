@@ -1,6 +1,6 @@
+#include <QTest>
 #include "LogEntryTest.h"
 #include "LogModelTest.h"
-#include <QTest>
 
 int main(int argc, char *argv[]) {
   int status = 0;

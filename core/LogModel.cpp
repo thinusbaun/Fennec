@@ -1,9 +1,9 @@
 #include "LogModel.h"
 #include <QDebug>
 
-LogModel::LogModel(const QStringList &headers) : mHeaders(headers) {}
+LogModel::LogModel(const QStringList& headers) : mHeaders(headers) {}
 
-int LogModel::columnCount(const QModelIndex &parent) const {
+int LogModel::columnCount(const QModelIndex& parent) const {
   Q_UNUSED(parent);
   return mHeaders.size();
 }
@@ -22,12 +22,12 @@ QVariant LogModel::headerData(int section, Qt::Orientation orientation,
   return QVariant();
 }
 
-int LogModel::rowCount(const QModelIndex &parent) const {
+int LogModel::rowCount(const QModelIndex& parent) const {
   Q_UNUSED(parent);
   return mEntries.size();
 }
 
-QVariant LogModel::data(const QModelIndex &index, int role) const {
+QVariant LogModel::data(const QModelIndex& index, int role) const {
   if (!index.isValid()) {
     return QVariant();
   }
@@ -48,20 +48,20 @@ QVariant LogModel::data(const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-Qt::ItemFlags LogModel::flags(const QModelIndex &index) const {
+Qt::ItemFlags LogModel::flags(const QModelIndex& index) const {
   if (mHeaders[index.column()] == "HAS_ADDITIONAL_DATA") {
     return QAbstractTableModel::flags(index) | Qt::ItemIsUserCheckable;
   }
   return QAbstractTableModel::flags(index);
 }
 
-void LogModel::addRow(const LogEntry &entry) {
+void LogModel::addRow(const LogEntry& entry) {
   emit beginInsertRows(QModelIndex(), mEntries.size(), mEntries.size());
   mEntries.append(entry);
   emit endInsertRows();
 }
 
-void LogModel::mergeLastRow(const LogEntry &entry) {
+void LogModel::mergeLastRow(const LogEntry& entry) {
   mEntries.last().merge(entry);
   emit dataChanged(index(mEntries.size(), 0),
                    index(mEntries.size(), mHeaders.size()));

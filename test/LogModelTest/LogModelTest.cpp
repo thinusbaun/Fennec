@@ -1,11 +1,11 @@
 #include <LogEntry.h>
-#include <QtTest/QtTest>
 #include <LogModel.h>
 #include <QSignalSpy>
+#include <QtTest/QtTest>
 
 class LogModelTest : public QObject {
   Q_OBJECT
-private slots:
+ private slots:
   void setColumnsCount();
   void addRow();
   void mergeRow();
@@ -13,7 +13,6 @@ private slots:
   void dataDisplayAndToolTipRole();
   void dataMultilineRole();
 };
-
 
 void LogModelTest::setColumnsCount() {
   QStringList columns{"A", "B", "C", "D"};
@@ -27,7 +26,7 @@ void LogModelTest::addRow() {
   QSignalSpy beginInsertSpy(&model, &LogModel::rowsAboutToBeInserted);
   QSignalSpy endInsertSpy(&model, &LogModel::rowsInserted);
   LogEntry entry;
-  for (auto &it : columns) {
+  for (auto& it : columns) {
     entry.setPart(it, it);
   }
   model.addRow(entry);
@@ -42,7 +41,7 @@ void LogModelTest::mergeRow() {
   LogModel model(columns);
   QSignalSpy dataChangedSpy(&model, &LogModel::dataChanged);
   LogEntry entry;
-  for (auto &it : columns) {
+  for (auto& it : columns) {
     entry.setPart(it, it);
   }
   model.addRow(entry);
@@ -57,7 +56,7 @@ void LogModelTest::headerData() {
   QStringList columns{"A", "B", "C", "D"};
   LogModel model(columns);
   LogEntry entry;
-  for (auto &it : columns) {
+  for (auto& it : columns) {
     entry.setPart(it, it);
   }
   model.addRow(entry);
@@ -73,7 +72,7 @@ void LogModelTest::dataDisplayAndToolTipRole() {
   QStringList columns{"A", "B", "C", "D"};
   LogModel model(columns);
   LogEntry entry;
-  for (auto &it : columns) {
+  for (auto& it : columns) {
     entry.setPart(it, it);
   }
   model.addRow(entry);
@@ -87,7 +86,7 @@ void LogModelTest::dataMultilineRole() {
   QStringList columns{"A", "B", "C", "D"};
   LogModel model(columns);
   LogEntry entry;
-  for (auto &it : columns) {
+  for (auto& it : columns) {
     entry.setPart(it, it);
   }
   LogEntry entryCopy(entry);

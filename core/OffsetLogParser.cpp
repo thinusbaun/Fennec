@@ -1,9 +1,9 @@
 #include "OffsetLogParser.h"
-#include "LogEntry.h"
 #include <QDateTime>
 #include <QDebug>
+#include "LogEntry.h"
 
-QDebug operator<<(QDebug debug, const LogEntry &c) {
+QDebug operator<<(QDebug debug, const LogEntry& c) {
   //  debug << c.timestamp().toString(Qt::ISODate);
   //  debug << c.level();
   //  debug << c.subsystem();

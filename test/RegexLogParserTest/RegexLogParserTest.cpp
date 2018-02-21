@@ -1,16 +1,16 @@
 #include <LogEntry.h>
+#include <RegexLogParser.h>
 #include <QString>
 #include <QtTest>
-#include <RegexLogParser.h>
 #include <memory>
 
 class RegexLogParserTest : public QObject {
   Q_OBJECT
 
-public:
+ public:
   RegexLogParserTest();
 
-private Q_SLOTS:
+ private Q_SLOTS:
   void simpleParseTest();
   void mergeParseTest();
 };

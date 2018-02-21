@@ -1,6 +1,6 @@
 #include "RegexLogParser.h"
 
-RegexLogParser::RegexLogParser(const QString &regex, QObject *parent)
+RegexLogParser::RegexLogParser(const QString& regex, QObject* parent)
     : LogParser(parent), mRegExp(QRegularExpression(regex)) {}
 
 void RegexLogParser::parseLine(QString line) {

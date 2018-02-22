@@ -13,20 +13,21 @@ include(GenerateExportHeader)
 generate_export_header(core)
 
 target_include_directories(
-    core PUBLIC
+	core PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}
-    "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
+	"$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
 target_link_libraries(core Qt5::Widgets)
 
-add_custom_command(TARGET core POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:core>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Gui> $<TARGET_FILE_DIR:core>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Widgets> $<TARGET_FILE_DIR:core>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Svg> $<TARGET_FILE_DIR:core>
-    )
-
+if (WIN32)
+	add_custom_command(TARGET core POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:core>
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Gui> $<TARGET_FILE_DIR:core>
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Widgets> $<TARGET_FILE_DIR:core>
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Svg> $<TARGET_FILE_DIR:core>
+	)
+ENDIF()
 
 if (GIT_FOUND)
 	execute_process(

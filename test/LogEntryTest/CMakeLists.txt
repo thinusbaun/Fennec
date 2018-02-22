@@ -12,5 +12,8 @@ IF(WIN32)
 		COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Test> $<TARGET_FILE_DIR:LogEntryTest>
 	)
 ENDIF()
-
-add_test(LogEntryTest ${CTEST_CONFIGURATION_TYPE}/${CMAKE_BINARY_DIR}/LogEntryTest.exe)
+if(WIN32)
+	add_test(LogEntryTest ${CTEST_CONFIGURATION_TYPE}/${CMAKE_BINARY_DIR}/LogEntryTest.exe)
+ELSE()
+	add_test(LogEntryTest ${CTEST_CONFIGURATION_TYPE}/${CMAKE_BINARY_DIR}/LogEntryTest)
+ENDIF()

@@ -77,8 +77,10 @@ void LogModelTest::dataDisplayAndToolTipRole() {
   }
   model.addRow(entry);
 
-  QCOMPARE(model.data(model.index(0, 0), Qt::DisplayRole), columns[0]);
-  QCOMPARE(model.data(model.index(0, 0), Qt::ToolTipRole), columns[0]);
+  QCOMPARE(model.data(model.index(0, 0), Qt::DisplayRole).toString(),
+           columns[0]);
+  QCOMPARE(model.data(model.index(0, 0), Qt::ToolTipRole).toString(),
+           columns[0]);
   QVERIFY(!model.data(model.index(1, 1), Qt::DisplayRole).isValid());
 }
 
@@ -93,7 +95,8 @@ void LogModelTest::dataMultilineRole() {
   entry.merge(entryCopy);
   model.addRow(entry);
 
-  QCOMPARE(model.data(model.index(0, 0), LogModel::MultiLineRole), true);
+  QCOMPARE(model.data(model.index(0, 0), LogModel::MultiLineRole).toBool(),
+           true);
   QVERIFY(!model.data(model.index(1, 1), LogModel::MultiLineRole).isValid());
 }
 

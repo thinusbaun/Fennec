@@ -39,7 +39,7 @@ void RegexLogParserTest::mergeParseTest() {
   QVERIFY(parseLineSpy.count() == 1);
   LogEntry parsedEntry = qvariant_cast<LogEntry>(parseLineSpy.at(0).at(0));
   QCOMPARE(parsedEntry.getPartsMap().size(), 1);
-  QCOMPARE(parsedEntry.getPart("name"), line);
+  QCOMPARE(parsedEntry.getPart("name").toString(), line);
 }
 
 QTEST_APPLESS_MAIN(RegexLogParserTest)

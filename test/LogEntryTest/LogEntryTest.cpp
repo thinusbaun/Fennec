@@ -24,7 +24,8 @@ void LogEntryTest::mergeString() {
   second.setPart("PART_NAME", QVariant("second_line"));
 
   first.merge(second);
-  QCOMPARE("first_line\nsecond_line", first.getPartsMap()["PART_NAME"].toString());
+  QCOMPARE("first_line\nsecond_line",
+           first.getPartsMap()["PART_NAME"].toString());
 }
 
 void LogEntryTest::mergeNonString() {

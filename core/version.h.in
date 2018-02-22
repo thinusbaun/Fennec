@@ -1,0 +1,11 @@
+#ifndef VERSION_H
+#define VERSION_H
+
+#include <QString>
+
+namespace Fennec
+{
+static constexpr QString gitBranch{"@GIT_BRANCH@"};
+static constexpr QString gitCommitNumber{"@GIT_COMMIT_NUMBER@"};
+}
+#endif

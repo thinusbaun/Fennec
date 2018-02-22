@@ -15,8 +15,9 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - sourceline: 'ppa:beineri/opt-qt593-trusty'
           packages:
-            - qt5-default
+            - qt59-meta
             - g++-7
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
@@ -34,9 +35,9 @@ before_install:
 before_script:
 - mkdir -p build/{debug,release}
 - cd build/debug
-- cmake -DCMAKE_BUILD_TYPE=Debug ../..
+- cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=/opt/qt59 ../..
 - cd ../release
-- cmake -DCMAKE_BUILD_TYPE=Release ../..
+- cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/qt59 ../..
 - cd ..
 
 script:

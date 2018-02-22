@@ -14,7 +14,7 @@ void LogEntryTest::setPart() {
   entry.setPart("PART_NAME", QVariant("PART_VALUE"));
   QVERIFY2(entry.getPartsMap().contains("PART_NAME"),
            "Log entry does not contain part.");
-  QCOMPARE("PART_VALUE", entry.getPartsMap()["PART_NAME"].toString());
+  QCOMPARE(QString("PART_VALUE"), entry.getPartsMap()["PART_NAME"].toString());
 }
 
 void LogEntryTest::mergeString() {
@@ -24,7 +24,7 @@ void LogEntryTest::mergeString() {
   second.setPart("PART_NAME", QVariant("second_line"));
 
   first.merge(second);
-  QCOMPARE("first_line\nsecond_line",
+  QCOMPARE(QString("first_line\nsecond_line"),
            first.getPartsMap()["PART_NAME"].toString());
 }
 

@@ -1,7 +1,7 @@
 project (libCore_project)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-find_package(Qt5Widgets)
+find_package(Qt5Widgets 5.9 REQUIRED)
 find_package(Qt5Svg)
 find_package(Git)
 

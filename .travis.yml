@@ -17,8 +17,8 @@ matrix:
             - ubuntu-toolchain-r-test
             - sourceline: 'ppa:beineri/opt-qt593-trusty'
           packages:
-            - qt59-base
-            - qt59-svg
+            - qt59base
+            - qt59svg
             - g++-7
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"

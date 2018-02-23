@@ -7,6 +7,7 @@
 #include <QWidget>
 
 #include "LogViewTabManager.h"
+#include "version.h"
 
 #include "MainWindow.h"
 
@@ -48,6 +49,7 @@ void MainWindow::centerAndResize() {
 }
 
 void MainWindow::setBasicWindowName(const QString& name) {
-  mBasicName = name;
-  setWindowTitle(name);
+  mBasicName = QString("%1(%2 %3)")
+                   .arg(name, Fennec::gitBranch, Fennec::gitCommitNumber);
+  setWindowTitle(mBasicName);
 }

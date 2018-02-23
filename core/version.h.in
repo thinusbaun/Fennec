@@ -5,7 +5,7 @@
 
 namespace Fennec
 {
-static constexpr QString gitBranch{"@GIT_BRANCH@"};
-static constexpr QString gitCommitNumber{"@GIT_COMMIT_NUMBER@"};
+static QString gitBranch{"@GIT_BRANCH@"};
+static QString gitCommitNumber{"@GIT_COMMIT_NUMBER@"};
 }
 #endif

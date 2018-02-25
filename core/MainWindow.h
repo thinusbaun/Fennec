@@ -1,24 +1,30 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtWidgets/QMainWindow>
+#include "SettingsDialog.h"
+
 #include <core_export.h>
+#include <QtWidgets/QMainWindow>
 
 class QTableView;
 
 class CORE_EXPORT MainWindow : public QMainWindow {
   Q_OBJECT
-public:
+ public:
   explicit MainWindow(QWidget *parent = nullptr);
 
   void centerAndResize();
 
   void setBasicWindowName(const QString &name);
 
-private:
+ private:
   static QMap<QString, QVariant> mSettings;
   QTableView *mTableView;
   QString mBasicName;
+
+  SettingsDialog *mSettingsDialog;
+
+  void createMenu();
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

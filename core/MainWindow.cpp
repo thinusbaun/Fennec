@@ -1,7 +1,9 @@
+#include <QAction>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QMenuBar>
 #include <QTabWidget>
 #include <QTableView>
 #include <QWidget>
@@ -30,6 +32,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
   LogViewTabManager manager(tabWidget, mSettings);
   manager.createViews();
+
+  mSettingsDialog = new SettingsDialog(this, Qt::WindowFlags());
+  createMenu();
 }
 
 void MainWindow::centerAndResize() {
@@ -52,4 +57,9 @@ void MainWindow::setBasicWindowName(const QString& name) {
   mBasicName = QString("%1(%2 %3)")
                    .arg(name, Fennec::gitBranch, Fennec::gitCommitNumber);
   setWindowTitle(mBasicName);
+}
+
+void MainWindow::createMenu() {
+  auto settingsAction = menuBar()->addAction("Settings");
+  connect(settingsAction, &QAction::triggered, mSettingsDialog, &QDialog::show);
 }

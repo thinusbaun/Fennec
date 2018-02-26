@@ -8,6 +8,8 @@ find_package(Git)
 file (GLOB_RECURSE source *.cpp)
 file (GLOB_RECURSE include_files *.h)
 
+source_group("Headers" FILES ${include_files})
+
 add_library(core SHARED ${source} ${include_files})
 include(GenerateExportHeader)
 generate_export_header(core)

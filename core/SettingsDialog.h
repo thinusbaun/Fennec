@@ -2,6 +2,7 @@
 #define SETTINGSDIALOG_H
 
 #include "JSONSyntaxHighlighter.h"
+#include "SettingsProvider.h"
 
 #include <QDialog>
 #include <QPlainTextEdit>
@@ -9,7 +10,7 @@
 
 class SettingsDialog : public QDialog {
  public:
-  SettingsDialog(QWidget* parent, Qt::WindowFlags flags);
+  SettingsDialog(QWidget* parent, Qt::WindowFlags flags, SettingsProvider& settingsProvider);
   ~SettingsDialog();
 
  private:
@@ -18,6 +19,8 @@ class SettingsDialog : public QDialog {
   QPushButton* mCancelButton;
 
   JSONSyntaxHighlighter* mSyntaxHighlighter;
+
+  SettingsProvider& mSettingsProvider;
 
  private slots:
   void acceptClicked();

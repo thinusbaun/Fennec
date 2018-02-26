@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "SettingsDialog.h"
+#include "SettingsProvider.h"
 
 #include <core_export.h>
 #include <QtWidgets/QMainWindow>
@@ -23,6 +24,7 @@ class CORE_EXPORT MainWindow : public QMainWindow {
   QString mBasicName;
 
   SettingsDialog *mSettingsDialog;
+  SettingsProvider mSettingsProvider;
 
   void createMenu();
 };

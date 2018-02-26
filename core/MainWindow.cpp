@@ -33,7 +33,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   LogViewTabManager manager(tabWidget, mSettings);
   manager.createViews();
 
-  mSettingsDialog = new SettingsDialog(this, Qt::WindowFlags());
+  mSettingsDialog =
+      new SettingsDialog(this, Qt::WindowFlags(), mSettingsProvider);
   createMenu();
 }
 

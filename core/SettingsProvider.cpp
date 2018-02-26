@@ -1,20 +1,23 @@
 #include "SettingsProvider.h"
 
-SettingsProvider::SettingsProvider(QSettings* settings) : mSettings(settings) {}
+SettingsProvider::SettingsProvider() {}
 
-QList<LoggerObjectSettings> SettingsProvider::getAllLoggersSettings() {
-  QList<LoggerObjectSettings> result;
-  mSettings->beginGroup("LOGGERS");
-  for (auto& x : mSettings->childGroups()) {
-    mSettings->beginGroup(x);
-    LoggerObjectSettings loggerSettings;
-    loggerSettings.setName(mSettings->value("name").toString());
-    loggerSettings.setHeaders(mSettings->value("headers").toStringList());
-    loggerSettings.setLogParserName(mSettings->value("parserName").toString());
-    loggerSettings.setLogWatchName(mSettings->value("watchName").toString());
-    loggerSettings.setFilePath(mSettings->value("filePath").toString());
-    mSettings->endGroup();
-    result.append(loggerSettings);
+QJsonDocument SettingsProvider::getJsonSettings() const {
+  return QJsonDocument::fromVariant(mSettings);
+}
+
+bool SettingsProvider::trySaveSettings(const QString& settingsString,
+                                       QString& errorString) {
+  if (settingsString.isEmpty()) {
+    errorString = "Settings string is empty.";
+    return false;
   }
-  return result;
+  QJsonParseError error;
+  auto document = QJsonDocument::fromJson(settingsString.toUtf8(), &error);
+  if (error.error != QJsonParseError::NoError) {
+    errorString = error.errorString();
+    return false;
+  }
+  mSettings = document.toVariant();
+  return true;
 }

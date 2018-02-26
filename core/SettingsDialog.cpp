@@ -1,9 +1,13 @@
 #include "SettingsDialog.h"
 #include <QHBoxLayout>
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QMessageBox>
 #include "JSONSyntaxHighlighter.h"
 
-SettingsDialog::SettingsDialog(QWidget* parent, Qt::WindowFlags flags)
-    : QDialog(parent, flags) {
+SettingsDialog::SettingsDialog(QWidget* parent, Qt::WindowFlags flags,
+                               SettingsProvider& settingsProvider)
+    : QDialog(parent, flags), mSettingsProvider(settingsProvider) {
   auto mainLayout = new QGridLayout;
   setLayout(mainLayout);
   auto topLayout = new QHBoxLayout;
@@ -12,9 +16,10 @@ SettingsDialog::SettingsDialog(QWidget* parent, Qt::WindowFlags flags)
   mSettingsEditor = new QPlainTextEdit();
   //  mSettingsEditor->setFontFamily("Courier New");
   auto font = mSettingsEditor->font();
-  font.setFamily("monospace");
+  font.setFamily("Courier");
   mSettingsEditor->setFont(font);
   mSyntaxHighlighter = new JSONSyntaxHighlighter(mSettingsEditor->document());
+  mSettingsEditor->setPlainText(mSettingsProvider.getJsonSettings().toJson());
   topLayout->addWidget(mSettingsEditor);
 
   auto buttonLayout = new QHBoxLayout;
@@ -33,6 +38,17 @@ SettingsDialog::SettingsDialog(QWidget* parent, Qt::WindowFlags flags)
 
 SettingsDialog::~SettingsDialog() { delete mSyntaxHighlighter; }
 
-void SettingsDialog::acceptClicked() { hide(); }
+void SettingsDialog::acceptClicked() {
+  QString errorString;
+  if (!mSettingsProvider.trySaveSettings(mSettingsEditor->toPlainText(),
+                                         errorString)) {
+    auto messageBox = new QMessageBox();
+    messageBox->addButton(QMessageBox::Ok);
+    messageBox->setText(errorString);
+    messageBox->show();
+  } else {
+    hide();
+  }
+}
 
 void SettingsDialog::cancelClicked() { hide(); }

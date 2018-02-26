@@ -7,8 +7,9 @@ void RegexLogParser::parseLine(QString line) {
   QRegularExpressionMatch match = mRegExp.match(line);
   if (match.isValid() && match.hasMatch()) {
     LogEntry entry;
-    for (auto i = 1; i != mRegExp.namedCaptureGroups().size(); i++) {
-      entry.setPart(mRegExp.namedCaptureGroups().at(i), match.captured(i));
+    QStringList captureGroups = mRegExp.namedCaptureGroups();
+    for (auto i = 1; i != captureGroups.size(); i++) {
+      entry.setPart(captureGroups.at(i), match.captured(i));
     }
     emit lineParsed(entry);
   } else {

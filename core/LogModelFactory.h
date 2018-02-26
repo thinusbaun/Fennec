@@ -1,23 +1,26 @@
 #ifndef LOGMODELFACTORY_H
 #define LOGMODELFACTORY_H
 
+#include <core_export.h>
 #include <QMap>
 #include <QObject>
-#include <core_export.h>
 
 class LogModel;
+class SettingsProvider;
 
 class CORE_EXPORT LogModelFactory : public QObject {
   Q_OBJECT
-public:
+ public:
   explicit LogModelFactory(const QMap<QString, QVariant> &settings,
+                           SettingsProvider &mSettingsProvider,
                            QObject *parent = nullptr);
   virtual ~LogModelFactory();
 
   LogModel *create();
 
-private:
+ private:
   const QMap<QString, QVariant> mSettings;
+  SettingsProvider &mSettingsProvider;
 };
 
-#endif // LOGMODELFACTORY_H
+#endif  // LOGMODELFACTORY_H

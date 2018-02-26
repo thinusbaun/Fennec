@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   QTabWidget* tabWidget = new QTabWidget();
   layout->addWidget(tabWidget);
 
-  LogViewTabManager manager(tabWidget, mSettings);
+  LogViewTabManager manager(tabWidget, mSettings, mSettingsProvider);
   manager.createViews();
 
   mSettingsDialog =

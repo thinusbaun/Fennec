@@ -3,7 +3,7 @@
 SettingsProvider::SettingsProvider() {}
 
 QJsonDocument SettingsProvider::getJsonSettings() const {
-  return QJsonDocument::fromVariant(mSettings);
+  return QJsonDocument::fromVariant(QVariant(mSettings));
 }
 
 bool SettingsProvider::trySaveSettings(const QString& settingsString,
@@ -18,6 +18,10 @@ bool SettingsProvider::trySaveSettings(const QString& settingsString,
     errorString = error.errorString();
     return false;
   }
-  mSettings = document.toVariant();
+  mSettings = document.toVariant().toMap();
   return true;
+}
+
+QVariant SettingsProvider::getSettingsFor(const QString& name) {
+  return mSettings[name];
 }

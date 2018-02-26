@@ -3,20 +3,23 @@
 
 #include "LoggerObjectSettings.h"
 
+#include <core_export.h>
 #include <QList>
 #include <QSettings>
-#include <core_export.h>
 
 #include <QJsonDocument>
 class CORE_EXPORT SettingsProvider {
-public:
+ public:
   SettingsProvider();
 
   QJsonDocument getJsonSettings() const;
-  bool trySaveSettings(const QString & settingsString, QString & errorString, bool ignoreEmpty = false);
+  bool trySaveSettings(const QString& settingsString, QString& errorString,
+                       bool ignoreEmpty = false);
+  QVariant getSettingsFor(const QString& name);
 
-private:
-	QVariant mSettings;
+ private:
+  QMap<QString, QVariant> mSettings;
+  //	QVariant mSettings;
 };
 
-#endif // SETTINGSPROVIDER_H
+#endif  // SETTINGSPROVIDER_H

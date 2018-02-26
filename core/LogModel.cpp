@@ -1,7 +1,11 @@
 #include "LogModel.h"
 #include <QDebug>
+#include "LogRowColorizer.h"
 
-LogModel::LogModel(const QStringList& headers) : mHeaders(headers) {}
+LogModel::LogModel(const QStringList& headers, LogRowColorizer* rowColorizer)
+    : mHeaders(headers), mRowColorizer(rowColorizer) {}
+
+LogModel::~LogModel() { delete mRowColorizer; }
 
 int LogModel::columnCount(const QModelIndex& parent) const {
   Q_UNUSED(parent);
@@ -44,6 +48,10 @@ QVariant LogModel::data(const QModelIndex& index, int role) const {
   } else if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
     QString columnHeader = mHeaders[index.column()];
     return mEntries[index.row()].getPart(columnHeader);
+  } else if (role == Qt::BackgroundRole) {
+    if (mRowColorizer != nullptr) {
+      return mRowColorizer->getBrushForEntry(mEntries[index.row()]);
+    }
   }
   return QVariant();
 }

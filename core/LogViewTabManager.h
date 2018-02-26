@@ -1,25 +1,28 @@
 #ifndef LOGVIEWTABMANAGER_H
 #define LOGVIEWTABMANAGER_H
 
+#include <core_export.h>
 #include <QMap>
 #include <QObject>
 #include <QString>
 #include <QTabWidget>
 #include <QVariant>
-#include <core_export.h>
 
+class SettingsProvider;
 class CORE_EXPORT LogViewTabManager : public QObject {
   Q_OBJECT
-public:
+ public:
   explicit LogViewTabManager(QTabWidget *widgetToManage,
                              const QMap<QString, QVariant> &settings,
+                             SettingsProvider &settingsProvider,
                              QObject *parent = nullptr);
 
   void createViews();
 
-private:
+ private:
   QTabWidget *mWidget;
   const QMap<QString, QVariant> mSettings;
+  SettingsProvider &mSettingsProvider;
 };
 
-#endif // LOGVIEWTABMANAGER_H
+#endif  // LOGVIEWTABMANAGER_H

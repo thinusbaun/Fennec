@@ -7,20 +7,25 @@
 #include "TailFileWatchFactory.h"
 
 #include "LogViewTabManager.h"
+#include "SettingsProvider.h"
 
 #include <QHeaderView>
 #include <QTableView>
 
 LogViewTabManager::LogViewTabManager(QTabWidget* widgetToManage,
                                      const QMap<QString, QVariant>& settings,
+                                     SettingsProvider& settingsProvider,
                                      QObject* parent)
-    : QObject(parent), mWidget(widgetToManage), mSettings(settings) {}
+    : QObject(parent),
+      mWidget(widgetToManage),
+      mSettings(settings),
+      mSettingsProvider(settingsProvider) {}
 
 void LogViewTabManager::createViews() {
   QTableView* tableView = new QTableView();
   tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-  LogModelFactory factory(mSettings, this);
+  LogModelFactory factory(mSettings, mSettingsProvider, this);
   LogModel* model = factory.create();
   tableView->setModel(model);
   tableView->horizontalHeader()->setStretchLastSection(true);

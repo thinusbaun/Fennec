@@ -76,7 +76,7 @@ void MainWindow::loadSettings() {
   QString configPath =
       QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
   if (!configPath.isEmpty()) {
-    QFile configFile(configPath + "/config.json");
+    QFile configFile(configPath + "/FennecConfig.json");
     qDebug() << "Trying location: " << configFile.fileName();
     if (configFile.exists()) {
       configFile.open(QIODevice::ReadOnly);
@@ -102,7 +102,7 @@ void MainWindow::saveSettings() {
   QString configPath =
       QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
   if (!configPath.isEmpty()) {
-    QFile configFile(configPath + "/config.json");
+    QFile configFile(configPath + "/FennecConfig.json");
     qDebug() << "Trying location: " << configFile.fileName();
     configFile.open(QIODevice::WriteOnly);
     QByteArray settings = mSettingsProvider.getJsonSettings().toJson();

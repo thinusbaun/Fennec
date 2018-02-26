@@ -19,7 +19,6 @@ SettingsDialog::SettingsDialog(QWidget* parent, Qt::WindowFlags flags,
   font.setFamily("Courier");
   mSettingsEditor->setFont(font);
   mSyntaxHighlighter = new JSONSyntaxHighlighter(mSettingsEditor->document());
-  mSettingsEditor->setPlainText(mSettingsProvider.getJsonSettings().toJson());
   topLayout->addWidget(mSettingsEditor);
 
   auto buttonLayout = new QHBoxLayout;
@@ -38,6 +37,10 @@ SettingsDialog::SettingsDialog(QWidget* parent, Qt::WindowFlags flags,
 
 SettingsDialog::~SettingsDialog() { delete mSyntaxHighlighter; }
 
+int SettingsDialog::exec() {
+  mSettingsEditor->setPlainText(mSettingsProvider.getJsonSettings().toJson());
+  return QDialog::exec();
+}
 void SettingsDialog::acceptClicked() {
   QString errorString;
   if (!mSettingsProvider.trySaveSettings(mSettingsEditor->toPlainText(),
@@ -47,8 +50,8 @@ void SettingsDialog::acceptClicked() {
     messageBox->setText(errorString);
     messageBox->show();
   } else {
-    hide();
+    accept();
   }
 }
 
-void SettingsDialog::cancelClicked() { hide(); }
+void SettingsDialog::cancelClicked() { reject(); }

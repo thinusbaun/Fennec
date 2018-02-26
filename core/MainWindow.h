@@ -18,6 +18,9 @@ class CORE_EXPORT MainWindow : public QMainWindow {
 
   void setBasicWindowName(const QString &name);
 
+private slots:
+  void saveSettings();
+
  private:
   static QMap<QString, QVariant> mSettings;
   QTableView *mTableView;
@@ -27,6 +30,10 @@ class CORE_EXPORT MainWindow : public QMainWindow {
   SettingsProvider mSettingsProvider;
 
   void createMenu();
+
+  void loadSettings();
+
+
 };
 
 #endif  // MAINWINDOW_H

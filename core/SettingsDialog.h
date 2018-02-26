@@ -13,6 +13,9 @@ class SettingsDialog : public QDialog {
   SettingsDialog(QWidget* parent, Qt::WindowFlags flags, SettingsProvider& settingsProvider);
   ~SettingsDialog();
 
+  public slots:
+  virtual int exec() override;
+
  private:
   QPlainTextEdit* mSettingsEditor;
   QPushButton* mAcceptButton;

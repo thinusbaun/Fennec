@@ -7,8 +7,8 @@ QJsonDocument SettingsProvider::getJsonSettings() const {
 }
 
 bool SettingsProvider::trySaveSettings(const QString& settingsString,
-                                       QString& errorString) {
-  if (settingsString.isEmpty()) {
+                                       QString& errorString, bool ignoreEmpty) {
+  if (settingsString.isEmpty() && !ignoreEmpty) {
     errorString = "Settings string is empty.";
     return false;
   }

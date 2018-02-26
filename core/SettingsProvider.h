@@ -13,7 +13,7 @@ public:
   SettingsProvider();
 
   QJsonDocument getJsonSettings() const;
-  bool trySaveSettings(const QString & settingsString, QString & errorString);
+  bool trySaveSettings(const QString & settingsString, QString & errorString, bool ignoreEmpty = false);
 
 private:
 	QVariant mSettings;

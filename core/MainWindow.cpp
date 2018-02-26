@@ -1,13 +1,17 @@
 #include <QAction>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QFile>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QMenuBar>
+#include <QMessageBox>
+#include <QStandardPaths>
 #include <QTabWidget>
 #include <QTableView>
 #include <QWidget>
 
+#include <QDebug>
 #include "LogViewTabManager.h"
 #include "version.h"
 
@@ -22,6 +26,7 @@ QMap<QString, QVariant> MainWindow::mSettings{
      R"(^(?<TIMESTAMP>\d{2}:\d{2}:\d{2} \d{2}\/\d{2}\/\d{4}) (?<LEVEL>\w*): \[(?<SUBSYSTEM>.*:.*)\] (?<CONTENT>.*)$)"}};
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
+  loadSettings();
   QWidget* mainWidget = new QWidget(this);
   QHBoxLayout* layout = new QHBoxLayout();
   mainWidget->setLayout(layout);
@@ -62,5 +67,47 @@ void MainWindow::setBasicWindowName(const QString& name) {
 
 void MainWindow::createMenu() {
   auto settingsAction = menuBar()->addAction("Settings");
-  connect(settingsAction, &QAction::triggered, mSettingsDialog, &QDialog::show);
+  connect(settingsAction, &QAction::triggered, mSettingsDialog, &QDialog::exec);
+  connect(mSettingsDialog, &QDialog::accepted, this, &MainWindow::saveSettings);
+}
+
+void MainWindow::loadSettings() {
+  qDebug() << "Trying to load settings from file";
+  QString configPath =
+      QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+  if (!configPath.isEmpty()) {
+    QFile configFile(configPath + "/config.json");
+    qDebug() << "Trying location: " << configFile.fileName();
+    if (configFile.exists()) {
+      configFile.open(QIODevice::ReadOnly);
+      QString errorString;
+      if (!mSettingsProvider.trySaveSettings(configFile.readAll(), errorString,
+                                             true)) {
+        auto messageBox = new QMessageBox();
+        messageBox->addButton(QMessageBox::Ok);
+        messageBox->setText(errorString);
+        messageBox->show();
+        qDebug() << "Loading settings failed: " << errorString;
+      }
+      qDebug() << "Settings loaded";
+      configFile.close();
+    } else {
+      qDebug() << "Config file does not exist";
+    }
+  }
+}
+
+void MainWindow::saveSettings() {
+  qDebug() << "Trying to save settings to file";
+  QString configPath =
+      QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+  if (!configPath.isEmpty()) {
+    QFile configFile(configPath + "/config.json");
+    qDebug() << "Trying location: " << configFile.fileName();
+    configFile.open(QIODevice::WriteOnly);
+    QByteArray settings = mSettingsProvider.getJsonSettings().toJson();
+    qDebug() << "Writing settings: " << settings;
+    configFile.write(settings);
+    configFile.close();
+  }
 }

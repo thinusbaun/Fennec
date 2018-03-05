@@ -10,7 +10,9 @@
 #include "SettingsProvider.h"
 
 #include <QHeaderView>
+#include <QSplitter>
 #include <QTableView>
+#include <QTextEdit>
 
 LogViewTabManager::LogViewTabManager(QTabWidget* widgetToManage,
                                      const QMap<QString, QVariant>& settings,
@@ -42,5 +44,23 @@ void LogViewTabManager::createViews() {
   connect(parser, &LogParser::multiLineParsed, model, &LogModel::mergeLastRow);
   connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);
   watch->openFile();
-  mWidget->addTab(tableView, "File");
+
+  auto splitter = new QSplitter(Qt::Vertical);
+  splitter->addWidget(tableView);
+
+  auto contentWidget = new QTextEdit();
+  QFont font("Monospace");
+  font.setStyleHint(QFont::TypeWriter);
+  contentWidget->setFont(font);
+
+  auto selectionModel = tableView->selectionModel();
+
+  connect(selectionModel, &QItemSelectionModel::currentChanged,
+          [=](const QModelIndex& current, const QModelIndex& previous) {
+            contentWidget->setText(
+                model->data(current, Qt::DisplayRole).toString());
+          });
+  splitter->addWidget(contentWidget);
+
+  mWidget->addTab(splitter, "File");
 }

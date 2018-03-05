@@ -1,21 +1,28 @@
 #include "TailFileWatchFactory.h"
-#include "TailFileWatch.h"
-
 #include <QDebug>
 #include <QStandardPaths>
-TailFileWatchFactory::TailFileWatchFactory(
-    const QMap<QString, QVariant>& settings, QObject* parent)
-    : QObject(parent), mSettings(settings) {}
+
+#include "TailFileWatch.h"
+TailFileWatchFactory::TailFileWatchFactory(SettingsProvider& settingsProvider,
+                                           QObject* parent)
+    : QObject(parent), mSettingsProvider(settingsProvider) {}
 
 TailFileWatch* TailFileWatchFactory::create() {
-  qDebug() << "Searching for tail executable";
-  QString tailPath = QStandardPaths::findExecutable("tail");
-  if (tailPath.isEmpty()) {
-    qWarning() << "tail executable not found in PATH";
+  auto config = mSettingsProvider.getSettingsFor("TailFileWatch").toMap();
+  QString tailPath;
+  if (config.contains("TailExecutablePath")) {
+    qDebug() << "Tail executable path provided from config";
+    tailPath = config["TailExecutablePath"].toString();
   } else {
-    qDebug() << "Found tail executable path: " << tailPath;
+    qDebug() << "Searching for tail executable";
+    tailPath = QStandardPaths::findExecutable("tail");
+  }
+  if (tailPath.isEmpty()) {
+    qWarning() << "Tail executable not found in PATH or in config";
+  } else {
+    qDebug() << "Tail executable path: " << tailPath;
   }
   return new TailFileWatch(tailPath,
-                           mSettings["TAIL_ADDITIONAL_ARGS"].toStringList(),
-                           mSettings["TAIL_FILE_PATH"].toString());
+                           config["TailAdditionalArgs"].toStringList(),
+                           config["TailFilePath"].toString());
 }

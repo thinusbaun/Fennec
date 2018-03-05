@@ -34,7 +34,7 @@ void LogViewTabManager::createViews() {
   tableView->setItemDelegateForColumn(
       model->columnCount(model->index(0, 0)) - 1, new ContentItemDelegate());
 
-  TailFileWatchFactory watchFactory(mSettings, this);
+  TailFileWatchFactory watchFactory(mSettingsProvider, this);
   TailFileWatch* watch = watchFactory.create();
 
   RegexLogParserFactory parserFactory(mSettings, this);

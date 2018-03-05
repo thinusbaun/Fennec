@@ -11,15 +11,13 @@ class SettingsProvider;
 class CORE_EXPORT LogModelFactory : public QObject {
   Q_OBJECT
  public:
-  explicit LogModelFactory(const QMap<QString, QVariant> &settings,
-                           SettingsProvider &mSettingsProvider,
+  explicit LogModelFactory(SettingsProvider &mSettingsProvider,
                            QObject *parent = nullptr);
   virtual ~LogModelFactory();
 
   LogModel *create();
 
  private:
-  const QMap<QString, QVariant> mSettings;
   SettingsProvider &mSettingsProvider;
 };
 

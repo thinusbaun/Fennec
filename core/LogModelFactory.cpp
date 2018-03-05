@@ -3,16 +3,16 @@
 #include "LogRowColorizer.h"
 #include "SettingsProvider.h"
 
-LogModelFactory::LogModelFactory(const QMap<QString, QVariant>& settings,
-                                 SettingsProvider& settingsProvider,
+LogModelFactory::LogModelFactory(SettingsProvider& settingsProvider,
                                  QObject* parent)
-    : QObject(parent),
-      mSettings(settings),
-      mSettingsProvider(settingsProvider) {}
+    : QObject(parent), mSettingsProvider(settingsProvider) {}
 
 LogModelFactory::~LogModelFactory() {}
 
 LogModel* LogModelFactory::create() {
-  return new LogModel(mSettings["HEADERS"].toStringList(),
-                      new LogRowColorizer(mSettingsProvider));
+  auto config = mSettingsProvider.getSettingsFor("LogModel").toMap();
+  return new LogModel(
+      config["Headers"].toStringList(),
+      config.contains("LimitRows") ? config["LimitRows"].toInt() : -1,
+      new LogRowColorizer(mSettingsProvider));
 }

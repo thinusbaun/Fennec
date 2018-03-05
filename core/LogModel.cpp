@@ -2,8 +2,9 @@
 #include <QDebug>
 #include "LogRowColorizer.h"
 
-LogModel::LogModel(const QStringList& headers, LogRowColorizer* rowColorizer)
-    : mHeaders(headers), mRowColorizer(rowColorizer) {}
+LogModel::LogModel(const QStringList& headers, int limitRows,
+                   LogRowColorizer* rowColorizer)
+    : mHeaders(headers), mLimitRows(limitRows), mRowColorizer(rowColorizer) {}
 
 LogModel::~LogModel() { delete mRowColorizer; }
 
@@ -67,6 +68,12 @@ void LogModel::addRow(const LogEntry& entry) {
   emit beginInsertRows(QModelIndex(), mEntries.size(), mEntries.size());
   mEntries.append(entry);
   emit endInsertRows();
+  if (mLimitRows != -1 && mEntries.size() > mLimitRows) {
+    int tenPercentOfLimit = mLimitRows / 10;
+    emit beginRemoveRows(QModelIndex(), 0, tenPercentOfLimit - 1);
+    mEntries.remove(0, tenPercentOfLimit);
+    emit endRemoveRows();
+  }
 }
 
 void LogModel::mergeLastRow(const LogEntry& entry) {

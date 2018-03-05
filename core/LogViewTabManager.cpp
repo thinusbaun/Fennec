@@ -25,7 +25,7 @@ void LogViewTabManager::createViews() {
   QTableView* tableView = new QTableView();
   tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-  LogModelFactory factory(mSettings, mSettingsProvider, this);
+  LogModelFactory factory(mSettingsProvider, this);
   LogModel* model = factory.create();
   tableView->setModel(model);
   tableView->horizontalHeader()->setStretchLastSection(true);

@@ -12,7 +12,8 @@ class CORE_EXPORT LogModel : public QAbstractTableModel {
  public:
   constexpr static int MultiLineRole = Qt::UserRole + 1;
 
-  LogModel(const QStringList &headers, LogRowColorizer *rowColorizer);
+  LogModel(const QStringList &headers, int limitRows = -1,
+           LogRowColorizer *rowColorizer = nullptr);
   ~LogModel();
   int columnCount(const QModelIndex &parent) const;
   QVariant headerData(int section, Qt::Orientation orientation, int role) const;
@@ -26,6 +27,7 @@ class CORE_EXPORT LogModel : public QAbstractTableModel {
 
  private:
   QStringList mHeaders;
+  int mLimitRows;
   QVector<LogEntry> mEntries;
   LogRowColorizer *mRowColorizer;
 };

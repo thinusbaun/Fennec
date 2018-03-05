@@ -23,5 +23,9 @@ bool SettingsProvider::trySaveSettings(const QString& settingsString,
 }
 
 QVariant SettingsProvider::getSettingsFor(const QString& name) {
-  return mSettings[name];
+  if (mSettings.contains(name)) {
+    return mSettings[name];
+  } else {
+    return QMap<QString, QVariant>();
+  }
 }

@@ -15,12 +15,10 @@
 #include <QTextEdit>
 
 LogViewTabManager::LogViewTabManager(QTabWidget* widgetToManage,
-                                     const QMap<QString, QVariant>& settings,
                                      SettingsProvider& settingsProvider,
                                      QObject* parent)
     : QObject(parent),
       mWidget(widgetToManage),
-      mSettings(settings),
       mSettingsProvider(settingsProvider) {}
 
 void LogViewTabManager::createViews() {
@@ -37,7 +35,7 @@ void LogViewTabManager::createViews() {
   TailFileWatchFactory watchFactory(mSettingsProvider, this);
   TailFileWatch* watch = watchFactory.create();
 
-  RegexLogParserFactory parserFactory(mSettings, this);
+  RegexLogParserFactory parserFactory(mSettingsProvider, this);
   RegexLogParser* parser = parserFactory.create();
 
   connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);

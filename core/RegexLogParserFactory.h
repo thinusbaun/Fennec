@@ -1,24 +1,26 @@
 #ifndef REGEXLOGPARSERFACTORY_H
 #define REGEXLOGPARSERFACTORY_H
 
+#include <core_export.h>
 #include <QMap>
 #include <QObject>
 #include <QString>
 #include <QVariant>
-#include <core_export.h>
+#include "SettingsProvider.h"
 
 class RegexLogParser;
 
 class CORE_EXPORT RegexLogParserFactory : public QObject {
   Q_OBJECT
-public:
-  explicit RegexLogParserFactory(const QMap<QString, QVariant> &settings,
+ public:
+  explicit RegexLogParserFactory(SettingsProvider &settingsProvider,
                                  QObject *parent = nullptr);
 
   RegexLogParser *create();
 
-private:
+ private:
   const QMap<QString, QVariant> mSettings;
+  SettingsProvider &mSettingsProvider;
 };
 
-#endif // REGEXLOGPARSERFACTORY_H
+#endif  // REGEXLOGPARSERFACTORY_H

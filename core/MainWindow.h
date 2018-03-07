@@ -18,7 +18,7 @@ class CORE_EXPORT MainWindow : public QMainWindow {
 
   void setBasicWindowName(const QString &name);
 
-private slots:
+ private slots:
   void saveSettings();
 
  private:
@@ -32,8 +32,6 @@ private slots:
   void createMenu();
 
   void loadSettings();
-
-
 };
 
 #endif  // MAINWINDOW_H

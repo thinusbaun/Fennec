@@ -13,7 +13,6 @@ class CORE_EXPORT LogViewTabManager : public QObject {
   Q_OBJECT
  public:
   explicit LogViewTabManager(QTabWidget *widgetToManage,
-                             const QMap<QString, QVariant> &settings,
                              SettingsProvider &settingsProvider,
                              QObject *parent = nullptr);
 

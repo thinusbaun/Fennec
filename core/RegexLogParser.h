@@ -1,21 +1,21 @@
 #ifndef REGEXLOGPARSER_H
 #define REGEXLOGPARSER_H
 
-#include "LogParser.h"
+#include <core_export.h>
 #include <QObject>
 #include <QRegularExpression>
-#include <core_export.h>
+#include "LogParser.h"
 
 class CORE_EXPORT RegexLogParser : public LogParser {
   Q_OBJECT
-public:
+ public:
   explicit RegexLogParser(const QString &regex, QObject *parent = nullptr);
 
-public slots:
+ public slots:
   virtual void parseLine(QString line);
 
-private:
+ private:
   QRegularExpression mRegExp;
 };
 
-#endif // REGEXLOGPARSER_H
+#endif  // REGEXLOGPARSER_H

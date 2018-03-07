@@ -10,10 +10,11 @@
 
 class SettingsDialog : public QDialog {
  public:
-  SettingsDialog(QWidget* parent, Qt::WindowFlags flags, SettingsProvider& settingsProvider);
+  SettingsDialog(QWidget* parent, Qt::WindowFlags flags,
+                 SettingsProvider& settingsProvider);
   ~SettingsDialog();
 
-  public slots:
+ public slots:
   virtual int exec() override;
 
  private:

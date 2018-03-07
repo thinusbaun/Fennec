@@ -10,22 +10,22 @@
 #include <stdio.h>
 //#include <strsafe.h>
 //#include <io.h>
-#include <QProcess>
 #include <core_export.h>
+#include <QProcess>
 
 class CORE_EXPORT TailFileWatch : public QObject {
   Q_OBJECT
 
-public:
+ public:
   TailFileWatch(const QString &tailPath, const QStringList &tailArgs,
                 const QString &filePath, QObject *parent = nullptr);
   ~TailFileWatch();
   void openFile();
 
-signals:
+ signals:
   void newLine(const QString &line);
 
-private:
+ private:
   QString mTailPath;
   QStringList mTailArgs;
   QString mFilePath;
@@ -34,9 +34,9 @@ private:
   void setupFileWatcher();
 
   void closeHandle();
-private slots:
+ private slots:
   void fileChanged();
   void directoryChanged();
 };
 
-#endif // TAILFILEWATCH_H
+#endif  // TAILFILEWATCH_H

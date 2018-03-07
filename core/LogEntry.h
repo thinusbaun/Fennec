@@ -1,12 +1,12 @@
 #ifndef LOGENTRY_H
 #define LOGENTRY_H
+#include <core_export.h>
 #include <QDateTime>
 #include <QDebug>
 #include <QString>
-#include <core_export.h>
 
 class CORE_EXPORT LogEntry {
-public:
+ public:
   LogEntry();
 
   void setPart(const QString &name, const QVariant &value);
@@ -15,10 +15,10 @@ public:
   bool isPartMultiline(const QString &part) const;
   void merge(const LogEntry &entry);
 
-private:
+ private:
   QMap<QString, QVariant> mPartsMap;
   QMap<QString, bool> mMultilinesMap;
 };
 
 Q_DECLARE_METATYPE(LogEntry);
-#endif // LOGENTRY_H
+#endif  // LOGENTRY_H

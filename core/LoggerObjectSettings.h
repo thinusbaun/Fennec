@@ -1,12 +1,12 @@
 #ifndef LOGGEROBJECTSETTINGS_H
 #define LOGGEROBJECTSETTINGS_H
 
+#include <core_export.h>
 #include <QString>
 #include <QStringList>
-#include <core_export.h>
 
 class CORE_EXPORT LoggerObjectSettings {
-public:
+ public:
   LoggerObjectSettings();
 
   QStringList headers() const;
@@ -24,7 +24,7 @@ public:
   QString name() const;
   void setName(const QString &name);
 
-private:
+ private:
   QString mName;
   QStringList mHeaders;
   QString mLogWatchName;
@@ -32,4 +32,4 @@ private:
   QString mFilePath;
 };
 
-#endif // LOGGEROBJECTSETTINGS_H
+#endif  // LOGGEROBJECTSETTINGS_H

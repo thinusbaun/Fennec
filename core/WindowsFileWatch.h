@@ -3,28 +3,28 @@
 
 #ifdef WIN32
 
-#include <QFile>
-#include <QFileSystemWatcher>
-#include <QObject>
-#include <QTextStream>
+#include <core_export.h>
 #include <io.h>
 #include <stdio.h>
 #include <strsafe.h>
 #include <tchar.h>
 #include <windows.h>
-#include <core_export.h>
+#include <QFile>
+#include <QFileSystemWatcher>
+#include <QObject>
+#include <QTextStream>
 
 class CORE_EXPORT WindowsFileWatch : public QObject {
   Q_OBJECT
 
-public:
+ public:
   WindowsFileWatch(const QString &filePath, QObject *parent = nullptr);
   ~WindowsFileWatch();
 
-signals:
+ signals:
   void newLine(const QString &line);
 
-private:
+ private:
   QString mFilePath;
   LPCWSTR mWinApiFilePath;
   QFileSystemWatcher mFileSystemWatcher;
@@ -36,10 +36,10 @@ private:
   void setupFileWatcher();
 
   void closeHandle();
-private slots:
+ private slots:
   void fileChanged();
   void directoryChanged();
 };
 
 #endif
-#endif // WINDOWSFILEWATCH_H
+#endif  // WINDOWSFILEWATCH_H

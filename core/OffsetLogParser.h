@@ -1,13 +1,13 @@
 #ifndef OFFSETLOGPARSER_H
 #define OFFSETLOGPARSER_H
-#include "LogParser.h"
 #include <core_export.h>
+#include "LogParser.h"
 class CORE_EXPORT OffsetLogParser : public LogParser {
-public:
+ public:
   OffsetLogParser();
 
-public slots:
+ public slots:
   virtual void parseLine(QString line);
 };
 
-#endif // OFFSETLOGPARSER_H
+#endif  // OFFSETLOGPARSER_H

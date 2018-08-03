@@ -1,6 +1,5 @@
 version: 0.1.{build}
 image: Visual Studio 2017
-test: off
 
 configuration:
 - Release
@@ -27,5 +26,5 @@ build:
   verbosity: minimal
   parallel: true
 
-test:
+test_script:
   - ctest -V -j 2

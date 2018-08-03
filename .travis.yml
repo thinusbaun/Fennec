@@ -41,8 +41,11 @@ before_script:
 - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/qt59 ../..
 - cd ..
 
-script:
+build_script:
   - cd debug
   - cmake --build . -- -j2
   - cd ../release
   - cmake --build . -- -j2
+
+test_script:
+  - ctest -V  -j2

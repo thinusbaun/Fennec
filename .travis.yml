@@ -46,3 +46,4 @@ script:
   - cmake --build . -- -j2
   - cd ../release
   - cmake --build . -- -j2
+  - ctest -V

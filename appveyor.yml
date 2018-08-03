@@ -26,3 +26,6 @@ build:
   project: c:\projects\Fennec\build\Fennec.sln
   verbosity: minimal
   parallel: true
+
+test:
+  - ctest -V -j 2

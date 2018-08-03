@@ -1,6 +1,6 @@
 
-find_package(Qt5Core 5.9 REQUIRED)
-find_package(Qt5Test 5.9 REQUIRED)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Test REQUIRED)
 set(CMAKE_AUTOMOC ON)
 
 add_executable(LogModelTest LogModelTest.cpp)

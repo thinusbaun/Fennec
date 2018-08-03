@@ -1,6 +1,6 @@
 project (FennecApp)
 
-find_package(Qt5Core 5.9 REQUIRED)
+find_package(Qt5Core REQUIRED)
 set(CMAKE_AUTORCC ON)
 
 QT5_ADD_RESOURCES(RESOURCES res/app.qrc)

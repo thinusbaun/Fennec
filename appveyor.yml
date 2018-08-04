@@ -29,11 +29,6 @@ build:
 test_script:
   - ctest -V -j 2 -T Test
   - ps: |
-        $TestTag = Get-Content .\Testing\TAG -First 1
-        $XslPath = Resolve-Path -Path ".\..\ctest-to-junit.xsl"
-        $TestResultFilePath = Resolve-Path -Path ".\Testing\$TestTag\Test.xml"
-        $XSLInputElement = New-Object System.Xml.Xsl.XslCompiledTransform
-        $XSLInputElement.Load($XslPath)
-        $XSLInputElement.Transform($TestResultFilePath, (Join-Path (Resolve-Path .) "ctest-to-junit-results.xml"))
+        C:\Python37-x64\python.exe ..\util\ctest_result_converter.py
         $wc = New-Object 'System.Net.WebClient'
-        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\ctest-to-junit-results.xml))
+        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\Testing\junit-result.xml))

@@ -21,6 +21,8 @@ before_build:
 
     cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_PREFIX_PATH=C:\Qt\5.11\msvc2017_64
 
+    C:\Python37-x64\python.exe -m pip install lxml
+
 build:
   project: c:\projects\Fennec\build\Fennec.sln
   verbosity: minimal

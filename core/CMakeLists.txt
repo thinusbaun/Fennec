@@ -39,7 +39,7 @@ if (GIT_FOUND)
 		OUTPUT_STRIP_TRAILING_WHITESPACE
 	)
 	execute_process (
-		COMMAND git rev-list --count remotes/origin/master..
+                COMMAND git rev-list --count ${GIT_BRANCH}
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		OUTPUT_VARIABLE GIT_COMMIT_NUMBER
 		OUTPUT_STRIP_TRAILING_WHITESPACE

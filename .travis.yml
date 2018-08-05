@@ -2,7 +2,6 @@ language: cpp
 group: travis_latest
 sudo: false
 cache: ccache
-script: cmake
 
 branches:
   only:
@@ -41,11 +40,12 @@ before_script:
 - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/qt59 ../..
 - cd ..
 
-build_script:
+script:
   - cd debug
   - cmake --build . -- -j2
   - cd ../release
   - cmake --build . -- -j2
 
-test_script:
+after_script:
   - ctest -V  -j2
+

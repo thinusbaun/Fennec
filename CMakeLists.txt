@@ -17,3 +17,4 @@ add_subdirectory(test/LogModelTest)
 add_subdirectory(test/RegexLogParserTest)
 
 add_subdirectory(test/LogRowColorizerConfigSerializationTest)
+add_subdirectory(test/RegexLogParserConfigSerializationTest)

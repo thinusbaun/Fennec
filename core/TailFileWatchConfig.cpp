@@ -1,5 +1,4 @@
 #include "TailFileWatchConfig.h"
-#include "ObjectContentHandler.hh"
 
 #include <QJsonArray>
 #include <QJsonObject>

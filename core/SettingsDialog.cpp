@@ -38,16 +38,19 @@ SettingsDialog::SettingsDialog(QWidget* parent, Qt::WindowFlags flags,
 SettingsDialog::~SettingsDialog() { delete mSyntaxHighlighter; }
 
 int SettingsDialog::exec() {
-  mSettingsEditor->setPlainText(mSettingsProvider.getJsonSettings().toJson());
+  auto config = mSettingsProvider.saveSettings();
+  mSettingsEditor->setPlainText(config);
   return QDialog::exec();
 }
 void SettingsDialog::acceptClicked() {
   QString errorString;
-  if (!mSettingsProvider.trySaveSettings(mSettingsEditor->toPlainText(),
-                                         errorString)) {
+  auto result =
+      mSettingsProvider.loadSettings(mSettingsEditor->toPlainText().toUtf8());
+  if (!result.first) {
     auto messageBox = new QMessageBox();
     messageBox->addButton(QMessageBox::Ok);
-    messageBox->setText(errorString);
+    messageBox->setText(
+        QString("Load settings failed!\n%1").arg(result.second));
     messageBox->show();
   } else {
     accept();

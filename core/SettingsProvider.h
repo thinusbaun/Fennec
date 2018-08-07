@@ -2,24 +2,26 @@
 #define SETTINGSPROVIDER_H
 
 #include "LoggerObjectSettings.h"
+#include "SettingsContainer.h"
 
 #include <core_export.h>
 #include <QList>
 #include <QSettings>
 
 #include <QJsonDocument>
+
 class CORE_EXPORT SettingsProvider {
  public:
   SettingsProvider();
 
-  QJsonDocument getJsonSettings() const;
-  bool trySaveSettings(const QString& settingsString, QString& errorString,
-                       bool ignoreEmpty = false);
+  std::pair<bool, QString> loadSettings(const QByteArray& input);
+  QByteArray saveSettings();
+
   QVariant getSettingsFor(const QString& name);
 
  private:
+  SettingsContainer mContainer;
   QMap<QString, QVariant> mSettings;
-  //	QVariant mSettings;
 };
 
 #endif  // SETTINGSPROVIDER_H

@@ -2,24 +2,28 @@
 
 SettingsProvider::SettingsProvider() {}
 
-QJsonDocument SettingsProvider::getJsonSettings() const {
-  return QJsonDocument::fromVariant(QVariant(mSettings));
+std::pair<bool, QString> SettingsProvider::loadSettings(
+    const QByteArray& input) {
+  QJsonParseError error;
+  auto document = QJsonDocument::fromJson(input, &error);
+  if (error.error != QJsonParseError::NoError) {
+    return {false, error.errorString()};
+  }
+  if (!document.isObject()) {
+    return {false, "No object found in input"};
+  }
+  auto jsonObject = document.object();
+  mContainer = SettingsContainer();
+  mContainer.read(jsonObject);
+
+  return {true, QString()};
 }
 
-bool SettingsProvider::trySaveSettings(const QString& settingsString,
-                                       QString& errorString, bool ignoreEmpty) {
-  if (settingsString.isEmpty() && !ignoreEmpty) {
-    errorString = "Settings string is empty.";
-    return false;
-  }
-  QJsonParseError error;
-  auto document = QJsonDocument::fromJson(settingsString.toUtf8(), &error);
-  if (error.error != QJsonParseError::NoError) {
-    errorString = error.errorString();
-    return false;
-  }
-  mSettings = document.toVariant().toMap();
-  return true;
+QByteArray SettingsProvider::saveSettings() {
+  QJsonObject jsonObject;
+  mContainer.write(jsonObject);
+  QJsonDocument document = QJsonDocument(jsonObject);
+  return document.toJson();
 }
 
 QVariant SettingsProvider::getSettingsFor(const QString& name) {

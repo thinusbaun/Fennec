@@ -80,14 +80,14 @@ void MainWindow::loadSettings() {
     qDebug() << "Trying location: " << configFile.fileName();
     if (configFile.exists()) {
       configFile.open(QIODevice::ReadOnly);
-      QString errorString;
-      if (!mSettingsProvider.trySaveSettings(configFile.readAll(), errorString,
-                                             true)) {
+      auto result = mSettingsProvider.loadSettings(configFile.readAll());
+      if (!result.first) {
         auto messageBox = new QMessageBox();
         messageBox->addButton(QMessageBox::Ok);
-        messageBox->setText(errorString);
+        messageBox->setText(
+            QString("Load settings failed!\n%1").arg(result.second));
         messageBox->show();
-        qDebug() << "Loading settings failed: " << errorString;
+        qDebug() << "Loading settings failed: " << result.second;
       }
       qDebug() << "Settings loaded";
       configFile.close();
@@ -105,7 +105,7 @@ void MainWindow::saveSettings() {
     QFile configFile(configPath + "/FennecConfig.json");
     qDebug() << "Trying location: " << configFile.fileName();
     configFile.open(QIODevice::WriteOnly);
-    QByteArray settings = mSettingsProvider.getJsonSettings().toJson();
+    QByteArray settings = mSettingsProvider.saveSettings();
     qDebug() << "Writing settings: " << settings;
     configFile.write(settings);
     configFile.close();

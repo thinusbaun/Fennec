@@ -19,6 +19,8 @@ class CORE_EXPORT SettingsProvider {
 
   QVariant getSettingsFor(const QString& name);
 
+  SettingsContainer getContainer() const;
+
  private:
   SettingsContainer mContainer;
   QMap<QString, QVariant> mSettings;

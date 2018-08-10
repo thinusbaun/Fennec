@@ -19,7 +19,6 @@ class CORE_EXPORT RegexLogParserFactory : public QObject {
   RegexLogParser *create();
 
  private:
-  const QMap<QString, QVariant> mSettings;
   SettingsProvider &mSettingsProvider;
 };
 

@@ -5,6 +5,8 @@ SettingsContainer::SettingsContainer() {}
 void SettingsContainer::read(const QJsonObject &json) {
   mFileWatchConfig.read(json["fileWatch"].toObject());
   mLogParserConfig.read(json["logParser"].toObject());
+  mLogModelConfig.read(json["logModel"].toObject());
+  mLogRowColorizerConfig.read(json["logRowColorizer"].toObject());
   mName = json["name"].toString();
   mSourcePath = json["sourcePath"].toString();
 }
@@ -20,7 +22,16 @@ void SettingsContainer::write(QJsonObject &json) const {
     mLogParserConfig.write(jsonObject);
     json["logParser"] = jsonObject;
   }
-
+  {
+    QJsonObject jsonObject;
+    mLogModelConfig.write(jsonObject);
+    json["logModel"] = jsonObject;
+  }
+  {
+    QJsonObject jsonObject;
+    mLogRowColorizerConfig.write(jsonObject);
+    json["logRowColorizer"] = jsonObject;
+  }
   json["name"] = mName;
   json["sourcePath"] = mSourcePath;
 }
@@ -51,4 +62,22 @@ RegexLogParserConfig SettingsContainer::logParserConfig() const {
 void SettingsContainer::setLogParserConfig(
     const RegexLogParserConfig &logParserConfig) {
   mLogParserConfig = logParserConfig;
+}
+
+LogModelConfig SettingsContainer::logModelConfig() const {
+  return mLogModelConfig;
+}
+
+void SettingsContainer::setLogModelConfig(
+    const LogModelConfig &logModelConfig) {
+  mLogModelConfig = logModelConfig;
+}
+
+LogRowColorizerConfig SettingsContainer::logRowColorizerConfig() const {
+  return mLogRowColorizerConfig;
+}
+
+void SettingsContainer::setLogRowColorizerConfig(
+    const LogRowColorizerConfig &logRowColorizerConfig) {
+  mLogRowColorizerConfig = logRowColorizerConfig;
 }

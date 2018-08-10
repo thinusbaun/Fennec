@@ -1,6 +1,8 @@
 #ifndef LOGROWCOLORIZER_H
 #define LOGROWCOLORIZER_H
 
+#include "LogRowColorizerConfig.h"
+
 #include <QBrush>
 #include <QMap>
 class LogEntry;
@@ -8,16 +10,12 @@ class SettingsProvider;
 
 class LogRowColorizer {
  public:
-  LogRowColorizer(SettingsProvider& settingsProvider);
+  LogRowColorizer(const LogRowColorizerConfig& config);
 
   QBrush getBrushForEntry(const LogEntry& entry) const;
 
  private:
-  SettingsProvider& mSettingsProvider;
-  QString mPartName;
-  QMap<QString, QString> mColorsMap;
-
-  void getConfiguration();
+  LogRowColorizerConfig mConfig;
 };
 
 #endif  // LOGROWCOLORIZER_H

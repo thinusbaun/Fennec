@@ -1,6 +1,8 @@
 #ifndef TAILFILEWATCH_H
 #define TAILFILEWATCH_H
 
+#include "TailFileWatchConfig.h"
+
 #include <QFile>
 #include <QFileSystemWatcher>
 #include <QObject>
@@ -17,8 +19,8 @@ class CORE_EXPORT TailFileWatch : public QObject {
   Q_OBJECT
 
  public:
-  TailFileWatch(const QString &tailPath, const QStringList &tailArgs,
-                const QString &filePath, QObject *parent = nullptr);
+  TailFileWatch(const TailFileWatchConfig &config, const QString &filePath,
+                QObject *parent = nullptr);
   ~TailFileWatch();
   void openFile();
 
@@ -26,8 +28,7 @@ class CORE_EXPORT TailFileWatch : public QObject {
   void newLine(const QString &line);
 
  private:
-  QString mTailPath;
-  QStringList mTailArgs;
+  TailFileWatchConfig mConfig;
   QString mFilePath;
   QProcess *mTailProcess;
 
@@ -37,6 +38,7 @@ class CORE_EXPORT TailFileWatch : public QObject {
  private slots:
   void fileChanged();
   void directoryChanged();
+  void stdErrOutput();
 };
 
 #endif  // TAILFILEWATCH_H

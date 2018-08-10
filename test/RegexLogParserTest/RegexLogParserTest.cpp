@@ -1,5 +1,6 @@
 #include <LogEntry.h>
 #include <RegexLogParser.h>
+#include <RegexLogParserConfig.h>
 #include <QString>
 #include <QtTest>
 #include <memory>
@@ -18,8 +19,10 @@ class RegexLogParserTest : public QObject {
 RegexLogParserTest::RegexLogParserTest() {}
 
 void RegexLogParserTest::simpleParseTest() {
-  std::unique_ptr<RegexLogParser> parser(new RegexLogParser(QString(
-      R"((?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (?<something>\w+) (?<name>\w+))")));
+  RegexLogParserConfig config;
+  config.setRegex(QString(
+      R"((?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (?<something>\w+) (?<name>\w+))"));
+  std::unique_ptr<RegexLogParser> parser(new RegexLogParser(config));
   qRegisterMetaType<LogEntry>();
   QSignalSpy parseLineSpy(parser.get(), &RegexLogParser::lineParsed);
   QString line = "12-12-2018 Something Name";
@@ -30,8 +33,10 @@ void RegexLogParserTest::simpleParseTest() {
 }
 
 void RegexLogParserTest::mergeParseTest() {
-  std::unique_ptr<RegexLogParser> parser(new RegexLogParser(QString(
-      R"((?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (?<something>\w+) (?<name>\w+))")));
+  RegexLogParserConfig config;
+  config.setRegex(QString(
+      R"((?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (?<something>\w+) (?<name>\w+))"));
+  std::unique_ptr<RegexLogParser> parser(new RegexLogParser(config));
   qRegisterMetaType<LogEntry>();
   QSignalSpy parseLineSpy(parser.get(), &RegexLogParser::multiLineParsed);
   QString line = "SOMETHING ADDITIONAL";

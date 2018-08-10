@@ -33,3 +33,5 @@ QVariant SettingsProvider::getSettingsFor(const QString& name) {
     return QMap<QString, QVariant>();
   }
 }
+
+SettingsContainer SettingsProvider::getContainer() const { return mContainer; }

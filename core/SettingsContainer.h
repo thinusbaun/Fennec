@@ -1,6 +1,8 @@
 #ifndef SETTINGSCONTAINER_H
 #define SETTINGSCONTAINER_H
 
+#include "LogModelConfig.h"
+#include "LogRowColorizerConfig.h"
 #include "RegexLogParserConfig.h"
 #include "TailFileWatchConfig.h"
 
@@ -25,9 +27,18 @@ class SettingsContainer {
   RegexLogParserConfig logParserConfig() const;
   void setLogParserConfig(const RegexLogParserConfig &logParserConfig);
 
+  LogModelConfig logModelConfig() const;
+  void setLogModelConfig(const LogModelConfig &logModelConfig);
+
+  LogRowColorizerConfig logRowColorizerConfig() const;
+  void setLogRowColorizerConfig(
+      const LogRowColorizerConfig &logRowColorizerConfig);
+
  private:
   TailFileWatchConfig mFileWatchConfig;
   RegexLogParserConfig mLogParserConfig;
+  LogModelConfig mLogModelConfig;
+  LogRowColorizerConfig mLogRowColorizerConfig;
   QString mSourcePath;
   QString mName;
 };

@@ -5,16 +5,19 @@
 #include <QObject>
 #include <QRegularExpression>
 #include "LogParser.h"
+#include "RegexLogParserConfig.h"
 
 class CORE_EXPORT RegexLogParser : public LogParser {
   Q_OBJECT
  public:
-  explicit RegexLogParser(const QString &regex, QObject *parent = nullptr);
+  explicit RegexLogParser(const RegexLogParserConfig &config,
+                          QObject *parent = nullptr);
 
  public slots:
   virtual void parseLine(QString line);
 
  private:
+  RegexLogParserConfig mConfig;
   QRegularExpression mRegExp;
 };
 

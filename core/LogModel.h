@@ -1,6 +1,8 @@
 #ifndef LOGMODEL_H
 #define LOGMODEL_H
 
+#include "LogModelConfig.h"
+
 #include <LogEntry.h>
 #include <core_export.h>
 #include <QAbstractTableModel>
@@ -12,7 +14,7 @@ class CORE_EXPORT LogModel : public QAbstractTableModel {
  public:
   constexpr static int MultiLineRole = Qt::UserRole + 1;
 
-  LogModel(const QStringList &headers, int limitRows = -1,
+  LogModel(const LogModelConfig &config,
            LogRowColorizer *rowColorizer = nullptr);
   ~LogModel();
   int columnCount(const QModelIndex &parent) const;
@@ -26,8 +28,7 @@ class CORE_EXPORT LogModel : public QAbstractTableModel {
   void mergeLastRow(const LogEntry &entry);
 
  private:
-  QStringList mHeaders;
-  int mLimitRows;
+  LogModelConfig mConfig;
   QVector<LogEntry> mEntries;
   LogRowColorizer *mRowColorizer;
 };

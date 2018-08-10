@@ -13,6 +13,7 @@ void LogRowColorizerConfig::read(const QJsonObject &json) {
     QColor color;
     color.setNamedColor(valueObj["color"].toString());
     mValues.insert(match, color);
+    qDebug() << match << color;
   }
 }
 
@@ -35,7 +36,11 @@ void LogRowColorizerConfig::setPartName(const QString &partName) {
 }
 
 QColor LogRowColorizerConfig::getColorForValue(const QString &value) const {
-  return mValues[value];
+  if (mValues.contains(value)) {
+    return mValues[value];
+  } else {
+    return "transparent";
+  }
 }
 
 void LogRowColorizerConfig::addColorForValue(const QString &value,

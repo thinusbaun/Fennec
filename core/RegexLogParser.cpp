@@ -1,7 +1,10 @@
 #include "RegexLogParser.h"
 
-RegexLogParser::RegexLogParser(const QString& regex, QObject* parent)
-    : LogParser(parent), mRegExp(QRegularExpression(regex)) {}
+RegexLogParser::RegexLogParser(const RegexLogParserConfig& config,
+                               QObject* parent)
+    : LogParser(parent),
+      mConfig(config),
+      mRegExp(QRegularExpression(config.regex())) {}
 
 void RegexLogParser::parseLine(QString line) {
   QRegularExpressionMatch match = mRegExp.match(line);

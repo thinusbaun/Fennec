@@ -1,5 +1,6 @@
 #include <LogEntry.h>
 #include <LogModel.h>
+#include <LogModelConfig.h>
 #include <QSignalSpy>
 #include <QtTest/QtTest>
 
@@ -16,13 +17,17 @@ class LogModelTest : public QObject {
 
 void LogModelTest::setColumnsCount() {
   QStringList columns{"A", "B", "C", "D"};
-  LogModel model(columns);
+  LogModelConfig config;
+  config.setHeaders(columns);
+  LogModel model(config);
   QCOMPARE(model.columnCount(model.index(0, 0)), columns.size());
 }
 
 void LogModelTest::addRow() {
   QStringList columns{"A", "B", "C", "D"};
-  LogModel model(columns);
+  LogModelConfig config;
+  config.setHeaders(columns);
+  LogModel model(config);
   QSignalSpy beginInsertSpy(&model, &LogModel::rowsAboutToBeInserted);
   QSignalSpy endInsertSpy(&model, &LogModel::rowsInserted);
   LogEntry entry;
@@ -38,7 +43,9 @@ void LogModelTest::addRow() {
 
 void LogModelTest::mergeRow() {
   QStringList columns{"A", "B", "C", "D"};
-  LogModel model(columns);
+  LogModelConfig config;
+  config.setHeaders(columns);
+  LogModel model(config);
   QSignalSpy dataChangedSpy(&model, &LogModel::dataChanged);
   LogEntry entry;
   for (auto& it : columns) {
@@ -54,7 +61,9 @@ void LogModelTest::mergeRow() {
 
 void LogModelTest::headerData() {
   QStringList columns{"A", "B", "C", "D"};
-  LogModel model(columns);
+  LogModelConfig config;
+  config.setHeaders(columns);
+  LogModel model(config);
   LogEntry entry;
   for (auto& it : columns) {
     entry.setPart(it, it);
@@ -70,7 +79,9 @@ void LogModelTest::headerData() {
 
 void LogModelTest::dataDisplayAndToolTipRole() {
   QStringList columns{"A", "B", "C", "D"};
-  LogModel model(columns);
+  LogModelConfig config;
+  config.setHeaders(columns);
+  LogModel model(config);
   LogEntry entry;
   for (auto& it : columns) {
     entry.setPart(it, it);
@@ -86,7 +97,9 @@ void LogModelTest::dataDisplayAndToolTipRole() {
 
 void LogModelTest::dataMultilineRole() {
   QStringList columns{"A", "B", "C", "D"};
-  LogModel model(columns);
+  LogModelConfig config;
+  config.setHeaders(columns);
+  LogModel model(config);
   LogEntry entry;
   for (auto& it : columns) {
     entry.setPart(it, it);

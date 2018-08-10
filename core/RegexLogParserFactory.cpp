@@ -6,6 +6,5 @@ RegexLogParserFactory::RegexLogParserFactory(SettingsProvider& settingsProvider,
     : QObject(parent), mSettingsProvider(settingsProvider) {}
 
 RegexLogParser* RegexLogParserFactory::create() {
-  auto config = mSettingsProvider.getSettingsFor("RegexLogParser").toMap();
-  return new RegexLogParser(config["ParserRegex"].toString());
+  return new RegexLogParser(mSettingsProvider.getContainer().logParserConfig());
 }

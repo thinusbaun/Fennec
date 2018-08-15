@@ -6,19 +6,19 @@
 #include <QObject>
 
 class LogModel;
-class SettingsProvider;
+class SingleLogSetting;
 
 class CORE_EXPORT LogModelFactory : public QObject {
   Q_OBJECT
  public:
-  explicit LogModelFactory(SettingsProvider &mSettingsProvider,
+  explicit LogModelFactory(const SingleLogSetting &settings,
                            QObject *parent = nullptr);
   virtual ~LogModelFactory();
 
   LogModel *create();
 
  private:
-  SettingsProvider &mSettingsProvider;
+  const SingleLogSetting &mSettings;
 };
 
 #endif  // LOGMODELFACTORY_H

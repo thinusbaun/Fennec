@@ -1,19 +1,15 @@
 #include "LogModelFactory.h"
 #include "LogModel.h"
 #include "LogRowColorizer.h"
-#include "SettingsContainer.h"
-#include "SettingsProvider.h"
+#include "SingleLogSetting.h"
 
-LogModelFactory::LogModelFactory(SettingsProvider& settingsProvider,
+LogModelFactory::LogModelFactory(const SingleLogSetting& settings,
                                  QObject* parent)
-    : QObject(parent), mSettingsProvider(settingsProvider) {}
+    : QObject(parent), mSettings(settings) {}
 
 LogModelFactory::~LogModelFactory() {}
 
 LogModel* LogModelFactory::create() {
-  auto config = mSettingsProvider.getSettingsFor("LogModel").toMap();
-  return new LogModel(
-      mSettingsProvider.getContainer().logModelConfig(),
-      new LogRowColorizer(
-          mSettingsProvider.getContainer().logRowColorizerConfig()));
+  return new LogModel(mSettings.logModelConfig(),
+                      new LogRowColorizer(mSettings.logRowColorizerConfig()));
 }

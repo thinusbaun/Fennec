@@ -6,20 +6,20 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
-#include "SettingsProvider.h"
+#include "SingleLogSetting.h"
 
 class RegexLogParser;
 
 class CORE_EXPORT RegexLogParserFactory : public QObject {
   Q_OBJECT
  public:
-  explicit RegexLogParserFactory(SettingsProvider &settingsProvider,
+  explicit RegexLogParserFactory(const SingleLogSetting &settings,
                                  QObject *parent = nullptr);
 
   RegexLogParser *create();
 
  private:
-  SettingsProvider &mSettingsProvider;
+  const SingleLogSetting &mSettings;
 };
 
 #endif  // REGEXLOGPARSERFACTORY_H

@@ -8,9 +8,9 @@
 
 #include <QJsonObject>
 
-class SettingsContainer {
+class SingleLogSetting {
  public:
-  SettingsContainer();
+  SingleLogSetting();
 
   void read(const QJsonObject &json);
   void write(QJsonObject &json) const;

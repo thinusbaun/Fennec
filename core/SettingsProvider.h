@@ -2,28 +2,28 @@
 #define SETTINGSPROVIDER_H
 
 #include "LoggerObjectSettings.h"
-#include "SettingsContainer.h"
+#include "SingleLogSetting.h"
 
 #include <core_export.h>
-#include <QList>
 #include <QSettings>
+#include <QVector>
 
 #include <QJsonDocument>
 
 class CORE_EXPORT SettingsProvider {
+  using SettingsIterT = QVector<SingleLogSetting>::const_iterator;
+
  public:
   SettingsProvider();
 
   std::pair<bool, QString> loadSettings(const QByteArray& input);
   QByteArray saveSettings();
 
-  QVariant getSettingsFor(const QString& name);
-
-  SettingsContainer getContainer() const;
+  SettingsIterT begin();
+  SettingsIterT end();
 
  private:
-  SettingsContainer mContainer;
-  QMap<QString, QVariant> mSettings;
+  QVector<SingleLogSetting> mContainer;
 };
 
 #endif  // SETTINGSPROVIDER_H

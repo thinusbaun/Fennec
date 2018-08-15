@@ -22,43 +22,47 @@ LogViewTabManager::LogViewTabManager(QTabWidget* widgetToManage,
       mSettingsProvider(settingsProvider) {}
 
 void LogViewTabManager::createViews() {
-  QTableView* tableView = new QTableView();
-  tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+  for (const auto& settingsIt : mSettingsProvider) {
+    QTableView* tableView = new QTableView();
+    tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-  LogModelFactory factory(mSettingsProvider, this);
-  LogModel* model = factory.create();
-  tableView->setModel(model);
-  tableView->horizontalHeader()->setStretchLastSection(true);
-  tableView->setItemDelegateForColumn(
-      model->columnCount(model->index(0, 0)) - 1, new ContentItemDelegate());
+    LogModelFactory factory(settingsIt, this);
+    LogModel* model = factory.create();
+    tableView->setModel(model);
+    tableView->horizontalHeader()->setStretchLastSection(true);
+    tableView->setItemDelegateForColumn(
+        model->columnCount(model->index(0, 0)) - 1, new ContentItemDelegate());
 
-  TailFileWatchFactory watchFactory(mSettingsProvider, this);
-  TailFileWatch* watch = watchFactory.create();
+    TailFileWatchFactory watchFactory(settingsIt, this);
+    TailFileWatch* watch = watchFactory.create();
 
-  RegexLogParserFactory parserFactory(mSettingsProvider, this);
-  RegexLogParser* parser = parserFactory.create();
+    RegexLogParserFactory parserFactory(settingsIt, this);
+    RegexLogParser* parser = parserFactory.create();
 
-  connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);
-  connect(parser, &LogParser::multiLineParsed, model, &LogModel::mergeLastRow);
-  connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);
-  watch->openFile();
+    connect(watch, &TailFileWatch::newLine, parser, &LogParser::parseLine);
+    connect(parser, &LogParser::multiLineParsed, model,
+            &LogModel::mergeLastRow);
+    connect(parser, &LogParser::lineParsed, model, &LogModel::addRow);
+    watch->openFile();
 
-  auto splitter = new QSplitter(Qt::Vertical);
-  splitter->addWidget(tableView);
+    auto splitter = new QSplitter(Qt::Vertical);
+    splitter->addWidget(tableView);
 
-  auto contentWidget = new QTextEdit();
-  QFont font("Monospace");
-  font.setStyleHint(QFont::TypeWriter);
-  contentWidget->setFont(font);
+    auto contentWidget = new QTextEdit();
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+    contentWidget->setFont(font);
 
-  auto selectionModel = tableView->selectionModel();
+    auto selectionModel = tableView->selectionModel();
 
-  connect(selectionModel, &QItemSelectionModel::currentChanged,
-          [=](const QModelIndex& current, const QModelIndex& previous) {
-            contentWidget->setText(
-                model->data(current, Qt::DisplayRole).toString());
-          });
-  splitter->addWidget(contentWidget);
+    connect(selectionModel, &QItemSelectionModel::currentChanged,
+            [=](const QModelIndex& current, const QModelIndex& previous) {
+              Q_UNUSED(previous);
+              contentWidget->setText(
+                  model->data(current, Qt::DisplayRole).toString());
+            });
+    splitter->addWidget(contentWidget);
 
-  mWidget->addTab(splitter, "File");
+    mWidget->addTab(splitter, settingsIt.name());
+  }
 }

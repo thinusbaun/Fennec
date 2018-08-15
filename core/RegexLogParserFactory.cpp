@@ -1,10 +1,10 @@
 #include "RegexLogParserFactory.h"
 #include "RegexLogParser.h"
 
-RegexLogParserFactory::RegexLogParserFactory(SettingsProvider& settingsProvider,
+RegexLogParserFactory::RegexLogParserFactory(const SingleLogSetting& settings,
                                              QObject* parent)
-    : QObject(parent), mSettingsProvider(settingsProvider) {}
+    : QObject(parent), mSettings(settings) {}
 
 RegexLogParser* RegexLogParserFactory::create() {
-  return new RegexLogParser(mSettingsProvider.getContainer().logParserConfig());
+  return new RegexLogParser(mSettings.logParserConfig());
 }

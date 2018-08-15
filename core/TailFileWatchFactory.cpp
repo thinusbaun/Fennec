@@ -3,9 +3,9 @@
 #include <QStandardPaths>
 
 #include "TailFileWatch.h"
-TailFileWatchFactory::TailFileWatchFactory(SettingsProvider& settingsProvider,
+TailFileWatchFactory::TailFileWatchFactory(const SingleLogSetting& settings,
                                            QObject* parent)
-    : QObject(parent), mSettingsProvider(settingsProvider) {}
+    : QObject(parent), mSettings(settings) {}
 
 TailFileWatch* TailFileWatchFactory::create() {
   //  auto config = mSettingsProvider.getSettingsFor("TailFileWatch").toMap();
@@ -22,6 +22,5 @@ TailFileWatch* TailFileWatchFactory::create() {
   //  } else {
   //    qDebug() << "Tail executable path: " << tailPath;
   //  }
-  return new TailFileWatch(mSettingsProvider.getContainer().fileWatchConfig(),
-                           mSettingsProvider.getContainer().sourcePath());
+  return new TailFileWatch(mSettings.fileWatchConfig(), mSettings.sourcePath());
 }

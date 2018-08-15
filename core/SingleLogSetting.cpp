@@ -1,8 +1,8 @@
-#include "SettingsContainer.h"
+#include "SingleLogSetting.h"
 
-SettingsContainer::SettingsContainer() {}
+SingleLogSetting::SingleLogSetting() {}
 
-void SettingsContainer::read(const QJsonObject &json) {
+void SingleLogSetting::read(const QJsonObject &json) {
   mFileWatchConfig.read(json["fileWatch"].toObject());
   mLogParserConfig.read(json["logParser"].toObject());
   mLogModelConfig.read(json["logModel"].toObject());
@@ -11,7 +11,7 @@ void SettingsContainer::read(const QJsonObject &json) {
   mSourcePath = json["sourcePath"].toString();
 }
 
-void SettingsContainer::write(QJsonObject &json) const {
+void SingleLogSetting::write(QJsonObject &json) const {
   {
     QJsonObject jsonObject;
     mFileWatchConfig.write(jsonObject);
@@ -36,48 +36,47 @@ void SettingsContainer::write(QJsonObject &json) const {
   json["sourcePath"] = mSourcePath;
 }
 
-QString SettingsContainer::sourcePath() const { return mSourcePath; }
+QString SingleLogSetting::sourcePath() const { return mSourcePath; }
 
-void SettingsContainer::setSourcePath(const QString &sourcePath) {
+void SingleLogSetting::setSourcePath(const QString &sourcePath) {
   mSourcePath = sourcePath;
 }
 
-QString SettingsContainer::name() const { return mName; }
+QString SingleLogSetting::name() const { return mName; }
 
-void SettingsContainer::setName(const QString &name) { mName = name; }
+void SingleLogSetting::setName(const QString &name) { mName = name; }
 
-TailFileWatchConfig SettingsContainer::fileWatchConfig() const {
+TailFileWatchConfig SingleLogSetting::fileWatchConfig() const {
   return mFileWatchConfig;
 }
 
-void SettingsContainer::setFileWatchConfig(
+void SingleLogSetting::setFileWatchConfig(
     const TailFileWatchConfig &fileWatchConfig) {
   mFileWatchConfig = fileWatchConfig;
 }
 
-RegexLogParserConfig SettingsContainer::logParserConfig() const {
+RegexLogParserConfig SingleLogSetting::logParserConfig() const {
   return mLogParserConfig;
 }
 
-void SettingsContainer::setLogParserConfig(
+void SingleLogSetting::setLogParserConfig(
     const RegexLogParserConfig &logParserConfig) {
   mLogParserConfig = logParserConfig;
 }
 
-LogModelConfig SettingsContainer::logModelConfig() const {
+LogModelConfig SingleLogSetting::logModelConfig() const {
   return mLogModelConfig;
 }
 
-void SettingsContainer::setLogModelConfig(
-    const LogModelConfig &logModelConfig) {
+void SingleLogSetting::setLogModelConfig(const LogModelConfig &logModelConfig) {
   mLogModelConfig = logModelConfig;
 }
 
-LogRowColorizerConfig SettingsContainer::logRowColorizerConfig() const {
+LogRowColorizerConfig SingleLogSetting::logRowColorizerConfig() const {
   return mLogRowColorizerConfig;
 }
 
-void SettingsContainer::setLogRowColorizerConfig(
+void SingleLogSetting::setLogRowColorizerConfig(
     const LogRowColorizerConfig &logRowColorizerConfig) {
   mLogRowColorizerConfig = logRowColorizerConfig;
 }

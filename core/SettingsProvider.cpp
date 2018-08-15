@@ -1,4 +1,5 @@
 #include "SettingsProvider.h"
+#include <QJsonArray>
 
 SettingsProvider::SettingsProvider() {}
 
@@ -12,26 +13,32 @@ std::pair<bool, QString> SettingsProvider::loadSettings(
   if (!document.isObject()) {
     return {false, "No object found in input"};
   }
-  auto jsonObject = document.object();
-  mContainer = SettingsContainer();
-  mContainer.read(jsonObject);
+  auto jsonArray = document.array();
+  mContainer.reserve(jsonArray.size());
+  for (const auto& it : jsonArray) {
+    SingleLogSetting setting;
+    setting.read(it.toObject());
+    mContainer.push_back(setting);
+  }
 
   return {true, QString()};
 }
 
 QByteArray SettingsProvider::saveSettings() {
-  QJsonObject jsonObject;
-  mContainer.write(jsonObject);
-  QJsonDocument document = QJsonDocument(jsonObject);
+  QJsonArray jsonArray;
+  for (const auto& it : mContainer) {
+    QJsonObject object;
+    it.write(object);
+    jsonArray.push_back(object);
+  }
+  QJsonDocument document = QJsonDocument(jsonArray);
   return document.toJson();
 }
 
-QVariant SettingsProvider::getSettingsFor(const QString& name) {
-  if (mSettings.contains(name)) {
-    return mSettings[name];
-  } else {
-    return QMap<QString, QVariant>();
-  }
+SettingsProvider::SettingsIterT SettingsProvider::begin() {
+  return mContainer.begin();
 }
 
-SettingsContainer SettingsProvider::getContainer() const { return mContainer; }
+SettingsProvider::SettingsIterT SettingsProvider::end() {
+  return mContainer.end();
+}

@@ -6,20 +6,20 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
-#include "SettingsProvider.h"
+#include "SingleLogSetting.h"
 
 class TailFileWatch;
 
 class CORE_EXPORT TailFileWatchFactory : public QObject {
   Q_OBJECT
  public:
-  TailFileWatchFactory(SettingsProvider &settingsProvider,
+  TailFileWatchFactory(const SingleLogSetting &settings,
                        QObject *parent = nullptr);
 
   TailFileWatch *create();
 
  private:
-  SettingsProvider &mSettingsProvider;
+  const SingleLogSetting &mSettings;
 };
 
 #endif  // TAILFILEWATCHFACTORY_H
